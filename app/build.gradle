@@ -1,6 +1,8 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -35,12 +37,55 @@ android {
 }
 
 dependencies {
+    ext {
+        hiltVersion = '2.38.1'
+        coroutinesVersion = "1.4.2"
+        glideVersion = '4.12.0'
+        lifecycleVersion = '2.4.0'
+        retrofitVersion = '2.9.0'
+        roomVersion = '2.4.1'
+    }
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    testImplementation 'junit:junit:4.+'
+    kapt "androidx.room:room-compiler:$roomVersion"
+    kapt "com.github.bumptech.glide:compiler:$glideVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$hiltVersion"
+
+    implementation "androidx.core:core-ktx:1.7.0"
+    implementation "androidx.fragment:fragment-ktx:1.4.0"
+    implementation "androidx.appcompat:appcompat:1.4.1"
+    implementation "androidx.constraintlayout:constraintlayout:2.1.3"
+    implementation "com.google.android.material:material:1.5.0"
+
+    //LivaData
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
+
+    //Room DB
+    implementation "androidx.room:room-runtime:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+
+    //WorkManager
+    implementation "androidx.work:work-runtime-ktx:2.7.1"
+
+    //ImageCache
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
+
+    //Network
+    implementation "com.google.code.gson:gson:2.8.9"
+    implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
+
+    //Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion"
+
+    //Dependency Injection
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+
+    //Test
+    testImplementation "junit:junit:4.13.2"
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
