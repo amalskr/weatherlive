@@ -17,6 +17,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
+            android:name=".view.activity.FavoriteActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.activity.DetailsActivity"
             android:exported="false"
             android:parentActivityName=".view.activity.DetailsActivity">
