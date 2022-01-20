@@ -16,6 +16,7 @@ import com.ceylonapz.weatherlive.model.Days
 import com.ceylonapz.weatherlive.model.adapters.ForecastDayAdapter
 import com.ceylonapz.weatherlive.utilities.SELECTED_FORECAST_DAY
 import com.ceylonapz.weatherlive.view.activity.DetailsActivity
+import com.ceylonapz.weatherlive.view.activity.FavoriteActivity
 import com.ceylonapz.weatherlive.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -93,6 +94,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.action_favorites -> {
+                val intentFavorite =
+                    Intent(applicationContext, FavoriteActivity::class.java).apply { }
+                startActivity(intentFavorite)
+                true
+            }
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }

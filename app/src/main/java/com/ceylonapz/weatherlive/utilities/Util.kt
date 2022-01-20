@@ -9,7 +9,7 @@ private const val TAG = "Util"
  */
 fun sleep() {
     try {
-        Thread.sleep(1500, 0)
+        Thread.sleep(1000, 0)
     } catch (e: InterruptedException) {
         Log.e(TAG, e.message.toString())
     }

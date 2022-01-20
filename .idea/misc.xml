@@ -5,10 +5,12 @@
       <map>
         <entry key="..\:/Users/AmalShiwantha/MyProjects/WeatherLive/app/src/main/res/drawable/ic_launcher_foreground.xml" value="0.22962962962962963" />
         <entry key="..\:/Users/AmalShiwantha/MyProjects/WeatherLive/app/src/main/res/layout/activity_details.xml" value="0.264" />
+        <entry key="..\:/Users/AmalShiwantha/MyProjects/WeatherLive/app/src/main/res/layout/activity_favorite.xml" value="0.2234375" />
         <entry key="..\:/Users/AmalShiwantha/MyProjects/WeatherLive/app/src/main/res/layout/activity_main.xml" value="0.21910112359550563" />
         <entry key="..\:/Users/AmalShiwantha/MyProjects/WeatherLive/app/src/main/res/layout/activity_splash.xml" value="0.2234375" />
         <entry key="..\:/Users/AmalShiwantha/MyProjects/WeatherLive/app/src/main/res/layout/content_main.xml" value="0.21910112359550563" />
         <entry key="..\:/Users/AmalShiwantha/MyProjects/WeatherLive/app/src/main/res/layout/day_list_item.xml" value="0.264" />
+        <entry key="..\:/Users/AmalShiwantha/MyProjects/WeatherLive/app/src/main/res/menu/menu_scrolling.xml" value="0.2234375" />
       </map>
     </option>
   </component>
