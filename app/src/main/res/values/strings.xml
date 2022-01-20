@@ -99,4 +99,8 @@
     <string name="weather_icon">weather icon</string>
 
     <string name="temp_feel">Feel : %1$s</string>
+    <string name="uv_index">UV Index</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
+    <string name="description">Description</string>
 </resources>
