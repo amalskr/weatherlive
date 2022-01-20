@@ -1,32 +1,37 @@
 package com.ceylonapz.weatherlive.model.adapters
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ceylonapz.weatherlive.R
+import com.ceylonapz.weatherlive.databinding.DayListItemBinding
 import com.ceylonapz.weatherlive.model.Days
 
 class ForecastDayAdapter(private val dayList: List<Days>) :
     RecyclerView.Adapter<ForecastDayAdapter.ViewHolder>() {
 
-    class ViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-        val txtTitle: TextView = view.findViewById(R.id.txtForecastDate)
-        val imageView: ImageView = view.findViewById(R.id.txtForecastImage)
+    class ViewHolder(private val binding: DayListItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: Days) {
+            binding.apply {
+                dayModel = item
+                executePendingBindings()
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val viewLayout =
-            LayoutInflater.from(parent.context).inflate(R.layout.day_list_item, parent, false)
-        return ViewHolder(viewLayout)
+        return ViewHolder(
+            DayListItemBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val forecastDay = dayList[position]
-        holder.txtTitle.text = forecastDay.datetime
-        //holder.imageView.setImageResource(myItem.imageResourceId)
+        holder.bind(forecastDay)
     }
 
     override fun getItemCount(): Int {
