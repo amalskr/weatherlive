@@ -38,8 +38,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         binding.toolbarLayout.title = title
         binding.fabLocationSearch.setOnClickListener { view ->
-            binding.mainProgressBar.visibility = View.VISIBLE
-            searchLocation("Colombo")
+            findNewLocation("Colombo")
         }
 
         mainViewModel.forecastLiveData.observe(this, { cityWeather ->
@@ -47,7 +46,13 @@ class MainActivity : AppCompatActivity() {
             updateUI(cityWeather)
         })
 
-        searchLocation("Matale, Palapathwela")
+        findNewLocation("Matale, Palapathwela")
+    }
+
+    private fun findNewLocation(location: String) {
+        binding.mainProgressBar.visibility = View.VISIBLE
+        binding.recyclerDay.visibility = View.GONE
+        searchLocation(location)
     }
 
     private fun updateUI(cityWeather: CityWeather?) {
@@ -67,9 +72,8 @@ class MainActivity : AppCompatActivity() {
     private fun openDetailsView(selectedDay: Days) {
         Toast.makeText(applicationContext, "Selected " + selectedDay.datetime, Toast.LENGTH_LONG)
             .show()
-        searchLocation("London")
+        findNewLocation("")
     }
-
 
     private fun searchLocation(location: String) {
         searchJob?.cancel()

@@ -27,6 +27,7 @@ class MainViewModel @Inject constructor(private val repository: ForecastReposito
             forecastLiveData.postValue(cityWeatherRes)
             setForecastTime()
         } else {
+            forecastLiveData.postValue(null)
             Log.d(TAG, "getForecastLocation : Error")
         }
     }
