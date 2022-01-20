@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(findViewById(R.id.toolbar))
         binding.toolbarLayout.title = title
-        binding.fab.setOnClickListener { view ->
+        binding.fabLocationSearch.setOnClickListener { view ->
             searchLocation("Palapathwela") //38.9697,-77.385
         }
 

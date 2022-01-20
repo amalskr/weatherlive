@@ -49,6 +49,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"
+                        android:contentDescription="@string/weather_icon"
                         android:src="@drawable/ic_forecast_fair_day" />
 
                     <TextView
@@ -57,8 +58,9 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/imgCondition"
                         android:gravity="center"
-                        android:text="25'"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline1" />
+                        android:text=""
+                        android:textAppearance="?attr/textAppearanceHeadline1"
+                        tools:text="25'" />
                 </RelativeLayout>
 
 
@@ -67,16 +69,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="MATALE | RAIN"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+                    android:text=""
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                    android:textStyle="bold"
+                    tools:text="LOCATION | RAIN" />
 
                 <TextView
                     android:id="@+id/txtDateTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="2021-12-10 12:20:32"
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Tooltip" />
+                    android:text=""
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Tooltip"
+                    tools:text="2021-12-10 12:20:32" />
 
                 <!--sub views-->
                 <LinearLayout
@@ -99,6 +104,7 @@
                         <ImageView
                             android:layout_width="@dimen/sub_icon"
                             android:layout_height="@dimen/sub_icon"
+                            android:contentDescription="@string/feel_like"
                             android:gravity="center"
                             android:src="@drawable/ic_feellike" />
 
@@ -106,8 +112,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="Feels 30c'"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+                            android:text=""
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                            tools:text="Feels 30c'" />
                     </LinearLayout>
 
                     <!--item humidity-->
@@ -122,6 +129,7 @@
                         <ImageView
                             android:layout_width="@dimen/sub_icon"
                             android:layout_height="@dimen/sub_icon"
+                            android:contentDescription="@string/wind_speed"
                             android:gravity="center"
                             android:src="@drawable/ic_windspeed" />
 
@@ -129,8 +137,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="30%"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+                            android:text=""
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                            tools:text="37" />
                     </LinearLayout>
 
                     <!--item windspeed-->
@@ -145,6 +154,7 @@
                         <ImageView
                             android:layout_width="@dimen/sub_icon"
                             android:layout_height="@dimen/sub_icon"
+                            android:contentDescription="@string/humidity"
                             android:gravity="center"
                             android:src="@drawable/ic_humidity" />
 
@@ -153,8 +163,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="37mph"
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+                            android:text=""
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                            tools:text="37mph" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -196,10 +207,10 @@
                 android:visibility="gone" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:visibility="gone"
                 android:id="@+id/recyclerDay"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:visibility="gone" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
@@ -207,7 +218,7 @@
     <!--Main Content End-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fabLocationSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/fab_margin"

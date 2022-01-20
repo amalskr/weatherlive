@@ -93,4 +93,8 @@
     <string name="loading_image">loading image</string>
     <string name="fab_search_location">fab search location</string>
     <string name="no_data">No Data</string>
+    <string name="humidity">humidity image</string>
+    <string name="wind_speed">wind speed</string>
+    <string name="feel_like">feel like</string>
+    <string name="weather_icon">weather icon</string>
 </resources>
