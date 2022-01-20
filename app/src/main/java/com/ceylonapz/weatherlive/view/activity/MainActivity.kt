@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
     private fun findNewLocation(location: String) {
         binding.mainProgressBar.visibility = View.VISIBLE
         binding.recyclerDay.visibility = View.GONE
+        binding.txtNoData.visibility = View.GONE
         searchLocation(location)
     }
 
