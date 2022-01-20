@@ -1,15 +1,22 @@
 package com.ceylonapz.weatherlive.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import com.ceylonapz.weatherlive.model.CityWeather
+import com.ceylonapz.weatherlive.utilities.db.DatabaseRepository
+import com.ceylonapz.weatherlive.utilities.db.Favorite
 import com.ceylonapz.weatherlive.utilities.network.api.ForecastRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(private val repository: ForecastRepository) : ViewModel() {
+class MainViewModel @Inject constructor(
+    private val apiRepo: ForecastRepository,
+    private val dbRepo: DatabaseRepository
+) : ViewModel() {
 
     private val TAG = "appRes"
     val forecastLiveData: MutableLiveData<CityWeather?> = MutableLiveData<CityWeather?>()
@@ -19,8 +26,12 @@ class MainViewModel @Inject constructor(private val repository: ForecastReposito
         MutableLiveData<String>()
     }
 
+    //get all saved locations
+    val allFavoriteLocations: LiveData<List<Favorite>> =
+        dbRepo.getAllLocations().asLiveData()
+
     suspend fun getForecastLocation(searchLocation: String) {
-        val results = repository.getForecastResultStream(searchLocation)
+        val results = apiRepo.getForecastResultStream(searchLocation)
 
         if (results.isSuccessful) {
             cityWeatherRes = results.body();

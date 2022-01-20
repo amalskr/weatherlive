@@ -15,9 +15,11 @@ import com.ceylonapz.weatherlive.model.CityWeather
 import com.ceylonapz.weatherlive.model.Days
 import com.ceylonapz.weatherlive.model.adapters.ForecastDayAdapter
 import com.ceylonapz.weatherlive.utilities.SELECTED_FORECAST_DAY
+import com.ceylonapz.weatherlive.utilities.db.Favorite
 import com.ceylonapz.weatherlive.view.activity.DetailsActivity
 import com.ceylonapz.weatherlive.view.activity.FavoriteActivity
 import com.ceylonapz.weatherlive.viewmodel.MainViewModel
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -41,15 +43,33 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         binding.toolbarLayout.title = title
         binding.fabLocationSearch.setOnClickListener { view ->
-            findNewLocation("Colombo")
+            mainViewModel.allFavoriteLocations.observe(this) { favoriteLocations ->
+                showFavoriteLocations(favoriteLocations)
+            }
         }
 
         mainViewModel.forecastLiveData.observe(this, { cityWeather ->
-            Log.d(TAG, "final : $cityWeather")
             updateUI(cityWeather)
         })
 
         findNewLocation("Matale, Palapathwela")
+    }
+
+    private fun showFavoriteLocations(favoriteLocations: List<Favorite>?) {
+        val builder = MaterialAlertDialogBuilder(this)
+        builder.setTitle("Your Favorite Locations")
+
+        val locationList = mutableListOf<String>()
+        for (fav in favoriteLocations!!) {
+            locationList.add(fav.locationName)
+        }
+
+        builder.setItems(locationList.toTypedArray()) { dialog, which ->
+            findNewLocation(locationList.get(which))
+        }
+
+        val dialog = builder.create()
+        dialog.show()
     }
 
     private fun findNewLocation(location: String) {
