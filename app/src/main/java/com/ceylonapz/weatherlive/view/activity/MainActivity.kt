@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.ceylonapz.weatherlive.R
 import com.ceylonapz.weatherlive.databinding.ActivityMainBinding
+import com.ceylonapz.weatherlive.model.CityWeather
 import com.ceylonapz.weatherlive.viewmodel.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,24 +34,23 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         binding.toolbarLayout.title = title
         binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            searchLocation("Palapathwela") //38.9697,-77.385
         }
 
-        binding.btnSearch.setOnClickListener { view ->
-            Snackbar.make(view, "Loading", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-            searchLocation("Matale") //38.9697,-77.385
-        }
-
-        viewModel.forecastLiveData.observe(this, {
-            Log.d(TAG, "final : $it")
-            Toast.makeText(applicationContext, "Data Loaded $it", Toast.LENGTH_LONG).show()
+        viewModel.forecastLiveData.observe(this, { cityWeather ->
+            Log.d(TAG, "final : $cityWeather")
+            updateUI(cityWeather)
         })
     }
 
+    private fun updateUI(cityWeather: CityWeather?) {
+        if (cityWeather != null) {
+            //binding.btnSearch.text = cityWeather.currentConditions.conditions
+        }
+    }
+
     private fun searchLocation(location: String) {
-        //searchJob?.cancel()
+        searchJob?.cancel()
         searchJob = lifecycleScope.launch {
             viewModel.getForecastLocation(location)
         }

@@ -22,6 +22,8 @@
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:statusBarScrim="?attr/colorSurface"
+            app:titleEnabled="false"
             app:toolbarId="@+id/toolbar">
 
             <androidx.appcompat.widget.Toolbar
@@ -31,10 +33,141 @@
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/Theme.WeatherLive.PopupOverlay" />
 
+            <!--content today weather-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:id="@+id/imgCondition"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/ic_forecast_fair_day" />
+
+                    <TextView
+                        android:id="@+id/txtTemperature"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/imgCondition"
+                        android:gravity="center"
+                        android:text="25'"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Headline1" />
+                </RelativeLayout>
+
+
+                <TextView
+                    android:id="@+id/txtCondition"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="MATALE | RAIN"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1" />
+
+                <TextView
+                    android:id="@+id/txtDateTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="2021-12-10 12:20:32"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Tooltip" />
+
+                <!--sub views-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:baselineAligned="false"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <!--item feelslike-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="@dimen/sub_icon"
+                            android:layout_height="@dimen/sub_icon"
+                            android:gravity="center"
+                            android:src="@drawable/ic_feellike" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="Feels 30c'"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+                    </LinearLayout>
+
+                    <!--item humidity-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="@dimen/sub_icon"
+                            android:layout_height="@dimen/sub_icon"
+                            android:gravity="center"
+                            android:src="@drawable/ic_windspeed" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="30%"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+                    </LinearLayout>
+
+                    <!--item windspeed-->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        tools:ignore="UseCompoundDrawables">
+
+                        <ImageView
+                            android:layout_width="@dimen/sub_icon"
+                            android:layout_height="@dimen/sub_icon"
+                            android:gravity="center"
+                            android:src="@drawable/ic_humidity" />
+
+                        <TextView
+                            android:id="@+id/txtWindspeed"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="37mph"
+                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
+    <!--Main Content-->
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/mainContentView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -45,21 +178,42 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/btnSearch"
+            <ProgressBar
+                android:id="@+id/mainProgressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SEARCH" />
+                android:layout_margin="50dp" />
+
+            <TextView
+                android:id="@+id/txtNoData"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="50dp"
+                android:gravity="center"
+                android:text="@string/no_data"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:visibility="gone"
+                android:id="@+id/recyclerDay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <!--Main Content End-->
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/fab_margin"
-        app:layout_anchor="@id/app_bar"
+        android:layout_margin="@dimen/fab_margin"
+        android:contentDescription="@string/fab_search_location"
+        app:layout_anchor="@id/mainContentView"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        app:srcCompat="@android:drawable/ic_menu_search" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

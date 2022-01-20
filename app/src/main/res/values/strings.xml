@@ -91,4 +91,6 @@
     </string>
     <string name="action_settings">Settings</string>
     <string name="loading_image">loading image</string>
+    <string name="fab_search_location">fab search location</string>
+    <string name="no_data">No Data</string>
 </resources>
