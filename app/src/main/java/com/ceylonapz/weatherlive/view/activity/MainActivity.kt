@@ -2,10 +2,10 @@ package com.ceylonapz.weatherlive.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -24,13 +24,22 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
+
+
+
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private var isFocused: Boolean = false;
     private val TAG = "appRes"
     private var searchJob: Job? = null
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel: MainViewModel by viewModels()
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+        isFocused = hasFocus
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +53,14 @@ class MainActivity : AppCompatActivity() {
         binding.toolbarLayout.title = title
         binding.fabLocationSearch.setOnClickListener { view ->
             mainViewModel.allFavoriteLocations.observe(this) { favoriteLocations ->
-                showFavoriteLocations(favoriteLocations)
+                println("isFocused "+isFocused)
+                if (favoriteLocations.size > 0 && isFocused) {
+                    showFavoriteLocations(favoriteLocations)
+                } else {
+                    Toast.makeText(applicationContext, "Please add new location", Toast.LENGTH_LONG)
+                        .show()
+                    openFavoriteScreen()
+                }
             }
         }
 
@@ -115,13 +131,17 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_favorites -> {
-                val intentFavorite =
-                    Intent(applicationContext, FavoriteActivity::class.java).apply { }
-                startActivity(intentFavorite)
+                openFavoriteScreen()
                 true
             }
             R.id.action_settings -> true
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun openFavoriteScreen() {
+        val intentFavorite =
+            Intent(applicationContext, FavoriteActivity::class.java).apply { }
+        startActivity(intentFavorite)
     }
 }
