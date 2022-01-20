@@ -4,14 +4,15 @@ import android.os.Bundle
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.ceylonapz.weatherlive.R
 import com.ceylonapz.weatherlive.databinding.ActivityFavoriteBinding
 import com.ceylonapz.weatherlive.model.adapters.FavoriteLocationAdapter
+import com.ceylonapz.weatherlive.utilities.db.Favorite
 import com.ceylonapz.weatherlive.viewmodel.FavoriteViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class FavoriteActivity : AppCompatActivity() {
@@ -40,7 +41,8 @@ class FavoriteActivity : AppCompatActivity() {
     }
 
     fun setupFavList() {
-        val adapter = FavoriteLocationAdapter()
+        val adapter =
+            FavoriteLocationAdapter({ selectedLocation -> openEnterLocationDialog(selectedLocation) })
         binding.recyclerFavLocation.adapter = adapter
         subscribeUi(adapter)
     }
@@ -53,24 +55,54 @@ class FavoriteActivity : AppCompatActivity() {
 
     fun clickActions() {
         binding.fabAddLocation.setOnClickListener {
-            openEnterLocationDialog()
+            openEnterLocationDialog(null)
         }
     }
 
-    fun openEnterLocationDialog() {
-        MaterialAlertDialogBuilder(this)
-            .setTitle(title)
-            .setMessage(getString(R.string.enter_location_message))
-            .setView(R.layout.dialog_location_entry)
-            .setPositiveButton(getString(R.string.save)) { dialog, which ->
-                val newLocation =
-                    (dialog as? AlertDialog)?.findViewById<EditText>(R.id.editLocation)?.text?.toString()
-                favViewModel.addNewLocation(newLocation.toString())
-                dialog.dismiss()
+    fun openEnterLocationDialog(favorite: Favorite?) {
+
+        var isUpdateTask = false
+        if (favorite != null) {
+            isUpdateTask = true
+        }
+
+        val view = layoutInflater.inflate(R.layout.dialog_location_entry, null);
+        val alertDialog = MaterialAlertDialogBuilder(this)
+        alertDialog.setTitle(title)
+        alertDialog.setMessage(getMessage(isUpdateTask))
+
+        val edit = view.findViewById<EditText>(R.id.editLocation)
+        edit.setText(favorite?.locationName)
+
+        alertDialog.setPositiveButton(getPositiveBtnName(isUpdateTask)) { dialog, which ->
+            val newLocation = edit.text.toString()
+
+            if (isUpdateTask) {
+                favViewModel.updateLocation(favorite!!.copy(locationName = newLocation))
+            } else {
+                favViewModel.addNewLocation(newLocation)
             }
-            .setNegativeButton(getString(android.R.string.cancel)) { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
+
+            dialog.dismiss()
+        }
+        alertDialog.setNegativeButton(getString(android.R.string.cancel), null)
+
+        alertDialog.setView(view);
+        alertDialog.show();
+    }
+
+    private fun getPositiveBtnName(isUpdateTask: Boolean): String {
+        when (isUpdateTask) {
+            true -> return getString(R.string.update)
+            false -> return getString(R.string.save)
+        }
+
+    }
+
+    private fun getMessage(isUpdateTask: Boolean): String {
+        when (isUpdateTask) {
+            true -> return getString(R.string.update_location_message)
+            false -> return getString(R.string.enter_location_message)
+        }
     }
 }

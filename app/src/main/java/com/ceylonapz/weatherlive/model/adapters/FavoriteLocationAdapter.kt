@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ceylonapz.weatherlive.databinding.ListItemFavoriteBinding
 import com.ceylonapz.weatherlive.utilities.db.Favorite
 
-class FavoriteLocationAdapter :
-    ListAdapter<Favorite, RecyclerView.ViewHolder>(PlantDiffCallback()) {
+class FavoriteLocationAdapter(private val onClick: (Favorite) -> Unit) :
+    ListAdapter<Favorite, RecyclerView.ViewHolder>(FavoriteDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return PlantViewHolder(
+        return FavoriteViewHolder(
             ListItemFavoriteBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -22,11 +22,12 @@ class FavoriteLocationAdapter :
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        val plant = getItem(position)
-        (holder as PlantViewHolder).bind(plant)
+        val favoriteLocation = getItem(position)
+        holder.itemView.setOnClickListener { onClick(favoriteLocation) }
+        (holder as FavoriteViewHolder).bind(favoriteLocation)
     }
 
-    class PlantViewHolder(
+    class FavoriteViewHolder(
         private val binding: ListItemFavoriteBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(fav: Favorite) {
@@ -38,7 +39,7 @@ class FavoriteLocationAdapter :
     }
 }
 
-private class PlantDiffCallback : DiffUtil.ItemCallback<Favorite>() {
+private class FavoriteDiffCallback : DiffUtil.ItemCallback<Favorite>() {
 
     override fun areItemsTheSame(oldItem: Favorite, newItem: Favorite): Boolean {
         return oldItem.id == newItem.id
