@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -39,13 +40,12 @@ class MainActivity : AppCompatActivity() {
         binding.btnSearch.setOnClickListener { view ->
             Snackbar.make(view, "Loading", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
-            //searchLocation("Colombo")
+            searchLocation("Matale") //38.9697,-77.385
         }
-
-        searchLocation("Matale") //38.9697,-77.385
 
         viewModel.forecastLiveData.observe(this, {
             Log.d(TAG, "final : $it")
+            Toast.makeText(applicationContext, "Data Loaded $it", Toast.LENGTH_LONG).show()
         })
     }
 
