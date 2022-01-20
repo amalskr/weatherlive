@@ -97,4 +97,6 @@
     <string name="wind_speed">wind speed</string>
     <string name="feel_like">feel like</string>
     <string name="weather_icon">weather icon</string>
+
+    <string name="temp_feel">Feel : %1$s</string>
 </resources>

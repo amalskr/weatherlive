@@ -1,230 +1,240 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".ui.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.ceylonapz.weatherlive.viewmodel.MainViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/app_bar_height"
+        android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        android:theme="@style/Theme.WeatherLive.AppBarOverlay">
+        tools:context=".ui.MainActivity">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="@dimen/app_bar_height"
             android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:statusBarScrim="?attr/colorSurface"
-            app:titleEnabled="false"
-            app:toolbarId="@+id/toolbar">
+            android:theme="@style/Theme.WeatherLive.AppBarOverlay">
 
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/Theme.WeatherLive.PopupOverlay" />
-
-            <!--content today weather-->
-            <LinearLayout
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
+                style="@style/Widget.MaterialComponents.Toolbar.Primary"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+                app:statusBarScrim="?attr/colorSurface"
+                app:titleEnabled="false"
+                app:toolbarId="@+id/toolbar">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center">
-
-                    <ImageView
-                        android:id="@+id/imgCondition"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerInParent="true"
-                        android:contentDescription="@string/weather_icon"
-                        android:src="@drawable/ic_forecast_fair_day" />
-
-                    <TextView
-                        android:id="@+id/txtTemperature"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/imgCondition"
-                        android:gravity="center"
-                        android:text=""
-                        android:textAppearance="?attr/textAppearanceHeadline1"
-                        tools:text="25'" />
-                </RelativeLayout>
-
-
-                <TextView
-                    android:id="@+id/txtCondition"
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text=""
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
-                    android:textStyle="bold"
-                    tools:text="LOCATION | RAIN" />
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/Theme.WeatherLive.PopupOverlay" />
 
-                <TextView
-                    android:id="@+id/txtDateTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text=""
-                    android:textAppearance="@style/TextAppearance.MaterialComponents.Tooltip"
-                    tools:text="2021-12-10 12:20:32" />
-
-                <!--sub views-->
+                <!--content today weather-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:baselineAligned="false"
-                    android:orientation="horizontal"
-                    android:weightSum="3">
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
-                    <!--item feelslike-->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        tools:ignore="UseCompoundDrawables">
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center">
 
                         <ImageView
-                            android:layout_width="@dimen/sub_icon"
-                            android:layout_height="@dimen/sub_icon"
-                            android:contentDescription="@string/feel_like"
-                            android:gravity="center"
-                            android:src="@drawable/ic_feellike" />
+                            android:id="@+id/imgCondition"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:contentDescription="@string/weather_icon"
+                            android:src="@drawable/ic_forecast_fair_day" />
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:id="@+id/txtTemperature"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_below="@+id/imgCondition"
                             android:gravity="center"
-                            android:text=""
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                            tools:text="Feels 30c'" />
-                    </LinearLayout>
+                            android:text="@{String.valueOf(viewModel.forecastLiveData.currentConditions.temp)}"
+                            android:textAppearance="?attr/textAppearanceHeadline1"
+                            tools:text="25'" />
+                    </RelativeLayout>
 
-                    <!--item humidity-->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
+
+                    <TextView
+                        android:id="@+id/txtAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:orientation="vertical"
-                        tools:ignore="UseCompoundDrawables">
+                        android:text="@{viewModel.forecastLiveData.address}"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                        android:textStyle="bold"
+                        tools:text="LOCATION" />
 
-                        <ImageView
-                            android:layout_width="@dimen/sub_icon"
-                            android:layout_height="@dimen/sub_icon"
-                            android:contentDescription="@string/wind_speed"
-                            android:gravity="center"
-                            android:src="@drawable/ic_windspeed" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text=""
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                            tools:text="37" />
-                    </LinearLayout>
-
-                    <!--item windspeed-->
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
+                    <TextView
+                        android:id="@+id/txtForecase"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:orientation="vertical"
-                        tools:ignore="UseCompoundDrawables">
+                        android:text="@{viewModel.forecastDateTime}"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Tooltip"
+                        tools:text="2021-12-10 12:20:32" />
 
-                        <ImageView
-                            android:layout_width="@dimen/sub_icon"
-                            android:layout_height="@dimen/sub_icon"
-                            android:contentDescription="@string/humidity"
-                            android:gravity="center"
-                            android:src="@drawable/ic_humidity" />
+                    <!--sub views-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:baselineAligned="false"
+                        android:orientation="horizontal"
+                        android:weightSum="3">
 
-                        <TextView
-                            android:id="@+id/txtWindspeed"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
+                        <!--item feelslike-->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
                             android:gravity="center"
-                            android:text=""
-                            android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
-                            tools:text="37mph" />
+                            android:orientation="vertical"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:layout_width="@dimen/sub_icon"
+                                android:layout_height="@dimen/sub_icon"
+                                android:contentDescription="@string/feel_like"
+                                android:gravity="center"
+                                android:src="@drawable/ic_feellike" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@{@string/temp_feel(viewModel.forecastLiveData.currentConditions.feelslike)}"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                tools:text="Feels 30c'" />
+                        </LinearLayout>
+
+                        <!--item humidity-->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:layout_width="@dimen/sub_icon"
+                                android:layout_height="@dimen/sub_icon"
+                                android:contentDescription="@string/wind_speed"
+                                android:gravity="center"
+                                android:src="@drawable/ic_windspeed" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@{String.valueOf(viewModel.forecastLiveData.currentConditions.humidity)}"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                tools:text="37" />
+                        </LinearLayout>
+
+                        <!--item windspeed-->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:orientation="vertical"
+                            tools:ignore="UseCompoundDrawables">
+
+                            <ImageView
+                                android:layout_width="@dimen/sub_icon"
+                                android:layout_height="@dimen/sub_icon"
+                                android:contentDescription="@string/humidity"
+                                android:gravity="center"
+                                android:src="@drawable/ic_humidity" />
+
+                            <TextView
+                                android:id="@+id/txtWindspeed"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@{String.valueOf(viewModel.forecastLiveData.currentConditions.windspeed)}"
+                                android:textAppearance="@style/TextAppearance.MaterialComponents.Caption"
+                                tools:text="37mph" />
+                        </LinearLayout>
+
                     </LinearLayout>
+
 
                 </LinearLayout>
 
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <!--Main Content-->
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/mainContentView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ProgressBar
+                    android:id="@+id/mainProgressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="50dp" />
+
+                <TextView
+                    android:id="@+id/txtNoData"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="50dp"
+                    android:gravity="center"
+                    android:text="@string/no_data"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:visibility="gone" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerDay"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
 
             </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
 
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+        <!--Main Content End-->
 
-    <!--Main Content-->
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/mainContentView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabLocationSearch"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:layout_margin="@dimen/fab_margin"
+            android:contentDescription="@string/fab_search_location"
+            app:layout_anchor="@id/mainContentView"
+            app:layout_anchorGravity="bottom|end"
+            app:srcCompat="@android:drawable/ic_menu_search" />
 
-            <ProgressBar
-                android:id="@+id/mainProgressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="50dp" />
-
-            <TextView
-                android:id="@+id/txtNoData"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="50dp"
-                android:gravity="center"
-                android:text="@string/no_data"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5"
-                android:visibility="gone" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerDay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="gone" />
-
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
-
-    <!--Main Content End-->
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabLocationSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:contentDescription="@string/fab_search_location"
-        app:layout_anchor="@id/mainContentView"
-        app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@android:drawable/ic_menu_search" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

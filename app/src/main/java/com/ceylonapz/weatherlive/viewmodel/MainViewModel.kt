@@ -13,18 +13,32 @@ class MainViewModel @Inject constructor(private val repository: ForecastReposito
 
     private val TAG = "appRes"
     val forecastLiveData: MutableLiveData<CityWeather?> = MutableLiveData<CityWeather?>()
+    var cityWeatherRes: CityWeather? = null
+
+    val forecastDateTime: MutableLiveData<String> by lazy {
+        MutableLiveData<String>()
+    }
 
     suspend fun getForecastLocation(searchLocation: String) {
         val results = repository.getForecastResultStream(searchLocation)
 
         if (results.isSuccessful) {
-            val responseResults = results.body();
-            forecastLiveData.postValue(responseResults)
+            cityWeatherRes = results.body();
+            forecastLiveData.postValue(cityWeatherRes)
+            setForecastTime()
         } else {
             Log.d(TAG, "getForecastLocation : Error")
         }
-
     }
+
+    private fun setForecastTime() {
+        val condition = cityWeatherRes!!.currentConditions.conditions
+        val date = cityWeatherRes!!.days[0].datetime
+        val time = cityWeatherRes!!.currentConditions.datetime
+
+        forecastDateTime.postValue("$condition | $date $time")
+    }
+
 
 }
 
