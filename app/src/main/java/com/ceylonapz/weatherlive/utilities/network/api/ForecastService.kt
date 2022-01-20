@@ -1,6 +1,6 @@
 package com.ceylonapz.weatherlive.utilities.network.api
 
-import com.ceylonapz.weatherlive.model.ForcastResponse
+import com.ceylonapz.weatherlive.model.CityWeather
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -37,6 +37,6 @@ interface ForecastService {
     suspend fun getForecast(
         @Path("location") location: String,
         @Query("key") key: String
-    ): Response<ForcastResponse>
+    ): Response<CityWeather>
 
 }
