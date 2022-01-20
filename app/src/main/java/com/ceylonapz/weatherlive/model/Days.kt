@@ -1,6 +1,7 @@
 package com.ceylonapz.weatherlive.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Days(
     @field:SerializedName("datetime") val datetime: String,
@@ -19,4 +20,4 @@ data class Days(
     @field:SerializedName("icon") val icon: String,
     @field:SerializedName("humidity") val humidity: Double,
     @field:SerializedName("hours") val hours: List<Hours>
-)
+) : Serializable

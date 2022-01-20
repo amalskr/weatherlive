@@ -14,6 +14,7 @@ import com.ceylonapz.weatherlive.databinding.ActivityMainBinding
 import com.ceylonapz.weatherlive.model.CityWeather
 import com.ceylonapz.weatherlive.model.Days
 import com.ceylonapz.weatherlive.model.adapters.ForecastDayAdapter
+import com.ceylonapz.weatherlive.utilities.SELECTED_FORECAST_DAY
 import com.ceylonapz.weatherlive.view.activity.DetailsActivity
 import com.ceylonapz.weatherlive.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -72,8 +73,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openDetailsView(selectedDay: Days) {
-        val intent = Intent(applicationContext, DetailsActivity::class.java).apply { }
-        startActivity(intent)
+        val detailsActivity = Intent(applicationContext, DetailsActivity::class.java).apply {
+            putExtra(SELECTED_FORECAST_DAY, selectedDay)
+        }
+        startActivity(detailsActivity)
     }
 
     private fun searchLocation(location: String) {
