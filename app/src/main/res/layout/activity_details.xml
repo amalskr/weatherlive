@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -74,7 +75,8 @@
                     android:layout_width="@dimen/forecast_icon"
                     android:layout_height="@dimen/forecast_icon"
                     android:contentDescription="@string/weather_icon"
-                    android:src="@drawable/ic_forecast_fair_day" />
+                    android:src="@drawable/ic_forecast_fair_day"
+                    app:imageFromUrl="@{viewDay.icon}" />
             </LinearLayout>
             <!--condition icon End-->
 

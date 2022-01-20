@@ -1,7 +1,10 @@
 package com.ceylonapz.weatherlive.view.activity
 
 import android.os.Bundle
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.ceylonapz.weatherlive.R
 import com.ceylonapz.weatherlive.databinding.ActivityDetailsBinding
 import com.ceylonapz.weatherlive.model.Days
 import com.ceylonapz.weatherlive.utilities.SELECTED_FORECAST_DAY
