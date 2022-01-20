@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.ceylonapz.weatherlive.databinding.ActivityFavoriteBinding
+import com.ceylonapz.weatherlive.model.adapters.FavoriteLocationAdapter
 import com.ceylonapz.weatherlive.viewmodel.FavoriteViewModel
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,9 +24,23 @@ class FavoriteActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = favViewModel
 
-        binding.btnAdd.setOnClickListener { favViewModel.addNewLocation("Colombo") }
+        setupFavList()
+        clickActions()
+    }
+
+    fun setupFavList() {
+        val adapter = FavoriteLocationAdapter()
+        binding.recyclerFavLocation.adapter = adapter
+        subscribeUi(adapter)
+    }
+
+    private fun subscribeUi(adapter: FavoriteLocationAdapter) {
         favViewModel.allFavoriteLocations.observe(this) { favoriteLocations ->
-            println("myFavList " + favoriteLocations.size)
+            adapter.submitList(favoriteLocations)
         }
+    }
+
+    fun clickActions(){
+        binding.btnAdd.setOnClickListener { favViewModel.addNewLocation("Colombo") }
     }
 }

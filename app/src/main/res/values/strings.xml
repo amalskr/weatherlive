@@ -108,4 +108,5 @@
     <string name="temp_max_min">Max : %1$s | Min : %2$s</string>
     <string name="wind_format">%1$s km/h</string>
     <string name="humidity_format">%1$s%%</string>
+    <string name="location_edit">location edit</string>
 </resources>
