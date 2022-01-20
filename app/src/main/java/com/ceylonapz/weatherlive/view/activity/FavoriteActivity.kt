@@ -87,10 +87,10 @@ class FavoriteActivity : AppCompatActivity() {
         }
 
         if (isUpdateTask) {
-            alertDialog.setNeutralButton(getString(R.string.delete), { dialog, which ->
+            alertDialog.setNeutralButton(getString(R.string.delete)) { dialog, which ->
                 favViewModel.deleteLocation(favorite!!)
                 dialog.dismiss()
-            })
+            }
         }
 
         alertDialog.setNegativeButton(getString(android.R.string.cancel), null)
