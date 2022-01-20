@@ -113,4 +113,5 @@
     <string name="update_location_message">Update your favorite location</string>
     <string name="save">SAVE</string>
     <string name="update">UPDATE</string>
+    <string name="delete">DELETE</string>
 </resources>

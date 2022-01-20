@@ -34,19 +34,17 @@ class FavoriteViewModel @Inject constructor(private val dbRepository: DatabaseRe
         }
     }
 
+    //delete location
+    fun deleteLocation(deleteLocation: Favorite) {
+        viewModelScope.launch {
+            dbRepository.deleteLocation(deleteLocation)
+            isdbUpdated.postValue("${deleteLocation.locationName} Location Deleted..!")
+        }
+    }
+
     private fun getNewFavoriteEntry(location: String): Favorite {
         return Favorite(
             locationName = location
-        )
-    }
-
-    private fun getUpdateFavoriteEntry(
-        favId: Int,
-        itemName: String
-    ): Favorite {
-        return Favorite(
-            id = favId,
-            locationName = itemName,
         )
     }
 }
