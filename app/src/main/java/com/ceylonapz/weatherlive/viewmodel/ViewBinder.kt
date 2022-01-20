@@ -3,7 +3,6 @@ package com.ceylonapz.weatherlive.viewmodel
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.ceylonapz.weatherlive.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
