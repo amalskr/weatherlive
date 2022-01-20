@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <LinearLayout
+        android:padding="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center|start"
+        android:orientation="horizontal"
+        android:weightSum="100"
+        android:baselineAligned="false">
+
+        <!--content-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="70"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtForecastDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceListItem"
+                tools:text="2022-12-12" />
+
+            <TextView
+                android:id="@+id/txtForecastConditions"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceListItem"
+                tools:text="Partly Cloud" />
+        </LinearLayout>
+
+        <!--image-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/txtForecastImage"
+                android:layout_width="@dimen/day_forcast"
+                android:layout_height="@dimen/day_forcast"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/weather_icon"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_forecast_fair_day" />
+
+        </LinearLayout>
+
+        <!--temp count-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="10"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtForecastTempMax"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceListItem"
+                tools:text="32'" />
+
+            <TextView
+                android:id="@+id/txtForecastTempMin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?attr/textAppearanceListItem"
+                tools:text="15'" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

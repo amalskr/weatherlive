@@ -217,9 +217,11 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerDay"
+                    android:scrollbars="vertical"
+                    android:visibility="gone"
+                    app:layoutManager="LinearLayoutManager"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone" />
+                    android:layout_height="match_parent"/>
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

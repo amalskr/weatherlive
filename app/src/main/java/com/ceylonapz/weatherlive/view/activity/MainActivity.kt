@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import com.ceylonapz.weatherlive.R
 import com.ceylonapz.weatherlive.databinding.ActivityMainBinding
 import com.ceylonapz.weatherlive.model.CityWeather
+import com.ceylonapz.weatherlive.model.adapters.ForecastDayAdapter
 import com.ceylonapz.weatherlive.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -36,18 +37,26 @@ class MainActivity : AppCompatActivity() {
         binding.toolbarLayout.title = title
         binding.fabLocationSearch.setOnClickListener { view ->
             binding.mainProgressBar.visibility = View.VISIBLE
-            searchLocation("Matale, Palapathwela") //38.9697,-77.385
+            searchLocation("Colombo")
         }
 
         mainViewModel.forecastLiveData.observe(this, { cityWeather ->
             Log.d(TAG, "final : $cityWeather")
             updateUI(cityWeather)
         })
+
+        searchLocation("Matale, Palapathwela")
     }
 
     private fun updateUI(cityWeather: CityWeather?) {
-        if (cityWeather == null) {
+        if (cityWeather != null) {
             binding.txtNoData.visibility = View.GONE
+            binding.recyclerDay.visibility = View.VISIBLE
+
+            binding.recyclerDay.adapter = ForecastDayAdapter(cityWeather.days)
+            binding.recyclerDay.setHasFixedSize(true)
+        } else {
+            binding.txtNoData.visibility = View.VISIBLE
         }
         binding.mainProgressBar.visibility = View.GONE
     }
