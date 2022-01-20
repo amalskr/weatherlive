@@ -14,6 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WeatherLive">
         <activity
+            android:name=".view.activity.DetailsActivity"
+            android:exported="false"
+            android:parentActivityName=".view.activity.DetailsActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".view.activity.DetailsActivity" />
+        </activity>
+        <activity
             android:name=".ui.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.WeatherLive.NoActionBar">

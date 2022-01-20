@@ -1,11 +1,11 @@
 package com.ceylonapz.weatherlive.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -14,6 +14,7 @@ import com.ceylonapz.weatherlive.databinding.ActivityMainBinding
 import com.ceylonapz.weatherlive.model.CityWeather
 import com.ceylonapz.weatherlive.model.Days
 import com.ceylonapz.weatherlive.model.adapters.ForecastDayAdapter
+import com.ceylonapz.weatherlive.view.activity.DetailsActivity
 import com.ceylonapz.weatherlive.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
@@ -71,9 +72,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openDetailsView(selectedDay: Days) {
-        Toast.makeText(applicationContext, "Selected " + selectedDay.datetime, Toast.LENGTH_LONG)
-            .show()
-        findNewLocation("")
+        val intent = Intent(applicationContext, DetailsActivity::class.java).apply { }
+        startActivity(intent)
     }
 
     private fun searchLocation(location: String) {
