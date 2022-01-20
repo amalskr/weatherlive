@@ -109,4 +109,6 @@
     <string name="wind_format">%1$s km/h</string>
     <string name="humidity_format">%1$s%%</string>
     <string name="location_edit">location edit</string>
+    <string name="enter_location_message">Enter your favorite location</string>
+    <string name="save">SAVE</string>
 </resources>

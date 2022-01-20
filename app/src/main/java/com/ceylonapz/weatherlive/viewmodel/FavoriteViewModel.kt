@@ -1,9 +1,6 @@
 package com.ceylonapz.weatherlive.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.ceylonapz.weatherlive.utilities.db.DatabaseRepository
 import com.ceylonapz.weatherlive.utilities.db.Favorite
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,12 +15,14 @@ class FavoriteViewModel @Inject constructor(private val dbRepository: DatabaseRe
     val allFavoriteLocations: LiveData<List<Favorite>> =
         dbRepository.getAllLocations().asLiveData()
 
+    val isdbUpdated = MutableLiveData<String>()
+
     //add new location
     fun addNewLocation(location: String) {
         val newLocation = getNewFavoriteEntry(location)
         viewModelScope.launch {
             dbRepository.addNewLocation(newLocation)
-            println("myFavList added $location")
+            isdbUpdated.postValue("$location Location Added..!")
         }
     }
 
