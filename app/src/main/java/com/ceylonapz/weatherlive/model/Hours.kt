@@ -1,6 +1,7 @@
 package com.ceylonapz.weatherlive.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class Hours(
     @field:SerializedName("datetime") val datetime: String,
@@ -10,4 +11,4 @@ data class Hours(
     @field:SerializedName("windspeed") val windspeed: Double,
     @field:SerializedName("conditions") val conditions: String,
     @field:SerializedName("icon") val icon: String
-)
+) : Serializable
