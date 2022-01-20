@@ -5,12 +5,14 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.ceylonapz.weatherlive.R
 import com.ceylonapz.weatherlive.databinding.ActivityMainBinding
 import com.ceylonapz.weatherlive.model.CityWeather
+import com.ceylonapz.weatherlive.model.Days
 import com.ceylonapz.weatherlive.model.adapters.ForecastDayAdapter
 import com.ceylonapz.weatherlive.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -53,13 +55,21 @@ class MainActivity : AppCompatActivity() {
             binding.txtNoData.visibility = View.GONE
             binding.recyclerDay.visibility = View.VISIBLE
 
-            binding.recyclerDay.adapter = ForecastDayAdapter(cityWeather.days)
+            binding.recyclerDay.adapter =
+                ForecastDayAdapter(cityWeather.days) { selectedDay -> openDetailsView(selectedDay) }
             binding.recyclerDay.setHasFixedSize(true)
         } else {
             binding.txtNoData.visibility = View.VISIBLE
         }
         binding.mainProgressBar.visibility = View.GONE
     }
+
+    private fun openDetailsView(selectedDay: Days) {
+        Toast.makeText(applicationContext, "Selected " + selectedDay.datetime, Toast.LENGTH_LONG)
+            .show()
+        searchLocation("London")
+    }
+
 
     private fun searchLocation(location: String) {
         searchJob?.cancel()

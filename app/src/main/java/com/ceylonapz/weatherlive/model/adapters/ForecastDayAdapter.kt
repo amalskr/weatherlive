@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ceylonapz.weatherlive.databinding.DayListItemBinding
 import com.ceylonapz.weatherlive.model.Days
 
-class ForecastDayAdapter(private val dayList: List<Days>) :
+class ForecastDayAdapter(
+    private val dayList: List<Days>,
+    private val listener: (Days) -> Unit
+) :
     RecyclerView.Adapter<ForecastDayAdapter.ViewHolder>() {
 
     class ViewHolder(private val binding: DayListItemBinding) :
@@ -32,9 +35,12 @@ class ForecastDayAdapter(private val dayList: List<Days>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val forecastDay = dayList[position]
         holder.bind(forecastDay)
+        holder.itemView.setOnClickListener { listener(forecastDay) }
+
     }
 
     override fun getItemCount(): Int {
         return dayList.size
     }
+
 }
