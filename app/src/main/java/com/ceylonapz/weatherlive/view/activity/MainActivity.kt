@@ -14,6 +14,8 @@ import com.ceylonapz.weatherlive.databinding.ActivityMainBinding
 import com.ceylonapz.weatherlive.model.CityWeather
 import com.ceylonapz.weatherlive.model.Days
 import com.ceylonapz.weatherlive.model.adapters.ForecastDayAdapter
+import com.ceylonapz.weatherlive.utilities.GPS_LOCATION
+import com.ceylonapz.weatherlive.utilities.NO_LOCATION
 import com.ceylonapz.weatherlive.utilities.SELECTED_FORECAST_DAY
 import com.ceylonapz.weatherlive.utilities.db.Favorite
 import com.ceylonapz.weatherlive.view.activity.DetailsActivity
@@ -23,8 +25,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-
-
 
 
 @AndroidEntryPoint
@@ -53,7 +53,6 @@ class MainActivity : AppCompatActivity() {
         binding.toolbarLayout.title = title
         binding.fabLocationSearch.setOnClickListener { view ->
             mainViewModel.allFavoriteLocations.observe(this) { favoriteLocations ->
-                println("isFocused "+isFocused)
                 if (favoriteLocations.size > 0 && isFocused) {
                     showFavoriteLocations(favoriteLocations)
                 } else {
@@ -68,7 +67,17 @@ class MainActivity : AppCompatActivity() {
             updateUI(cityWeather)
         })
 
-        findNewLocation("Matale, Palapathwela")
+        getIntentData()
+    }
+
+    private fun getIntentData() {
+        var gpsLocation = intent.getStringExtra(GPS_LOCATION) as String
+        if (gpsLocation.equals(NO_LOCATION)) {
+            gpsLocation = "Califonia"
+            Toast.makeText(applicationContext, "Can't get your current location", Toast.LENGTH_LONG)
+                .show()
+        }
+        findNewLocation(gpsLocation)
     }
 
     private fun showFavoriteLocations(favoriteLocations: List<Favorite>?) {
