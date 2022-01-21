@@ -16,6 +16,13 @@ class SettingsDataStore(context: Context) {
 
     companion object {
         private const val PREFERENCES_SETTINGS = "settings_preferance"
+        private var instance: SettingsDataStore? = null
+
+        fun getInstance(context: Context): SettingsDataStore {
+            return instance ?: synchronized(this) {
+                instance ?: SettingsDataStore(context).also { instance = it }
+            }
+        }
     }
 
     private val USER_TEMPERATURE = stringPreferencesKey("temperature_selected")

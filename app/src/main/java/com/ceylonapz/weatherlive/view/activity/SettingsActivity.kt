@@ -25,6 +25,7 @@ class SettingsActivity : AppCompatActivity() {
         binding = ActivitySettingsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.viewModel = settViewModel
+        binding.lifecycleOwner = this
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
         supportActionBar?.setDisplayShowHomeEnabled(true);
@@ -38,10 +39,15 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun initDataStore() {
-        settingsDataStore = SettingsDataStore(applicationContext)
+        settingsDataStore = SettingsDataStore.getInstance(applicationContext)
+
         settingsDataStore.getTemperatureType.asLiveData().observe(this, { layoutValue ->
             updateLayout(layoutValue)
         })
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
     private fun updateLayout(layoutValue: String?) {
