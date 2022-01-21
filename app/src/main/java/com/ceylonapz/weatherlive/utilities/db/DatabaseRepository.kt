@@ -8,6 +8,8 @@ class DatabaseRepository @Inject constructor(private val favoriteDao: FavoriteDa
 
     fun getAllLocations() = favoriteDao.getAll()
 
+    fun getFevLocations() = favoriteDao.getFavList()
+
     fun getLocation(id: Int) = favoriteDao.getLocation(id)
 
     suspend fun addNewLocation(fav: Favorite) = favoriteDao.insert(fav)

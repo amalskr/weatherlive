@@ -1,16 +1,17 @@
 package com.ceylonapz.weatherlive.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.asLiveData
+import androidx.lifecycle.*
 import com.ceylonapz.weatherlive.model.CityWeather
 import com.ceylonapz.weatherlive.utilities.db.DatabaseRepository
 import com.ceylonapz.weatherlive.utilities.db.Favorite
 import com.ceylonapz.weatherlive.utilities.network.api.ForecastRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
+
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -26,9 +27,20 @@ class MainViewModel @Inject constructor(
         MutableLiveData<String>()
     }
 
-    //get all saved locations
     val allFavoriteLocations: LiveData<List<Favorite>> =
         dbRepo.getAllLocations().asLiveData()
+
+    val myFavList: MutableLiveData<List<Favorite>> by lazy {
+        MutableLiveData<List<Favorite>>()
+    }
+
+    fun getFevList() {
+        viewModelScope.launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO) {
+                myFavList.postValue(dbRepo.getFevLocations())
+            }
+        }
+    }
 
     suspend fun getForecastLocation(searchLocation: String) {
         val results = apiRepo.getForecastResultStream(searchLocation)

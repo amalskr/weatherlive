@@ -8,6 +8,9 @@ interface FavoriteDao {
     @Query("SELECT * from favorite ORDER BY locationName ASC")
     fun getAll(): Flow<List<Favorite>>
 
+    @Query("SELECT * from favorite ORDER BY locationName ASC")
+    fun getFavList(): List<Favorite>
+
     @Query("SELECT * from favorite WHERE id = :id")
     fun getLocation(id: Int): Flow<Favorite>
 

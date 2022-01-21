@@ -31,44 +31,47 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    private var isFocused: Boolean = false;
-    private val TAG = "appRes"
-    private var searchJob: Job? = null
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel: MainViewModel by viewModels()
-
-    override fun onWindowFocusChanged(hasFocus: Boolean) {
-        super.onWindowFocusChanged(hasFocus)
-        isFocused = hasFocus
-    }
+    private var myFavoriteList: List<Favorite>? = null
+    private var searchJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.lifecycleOwner = this
         binding.viewModel = mainViewModel
 
         setSupportActionBar(findViewById(R.id.toolbar))
         binding.toolbarLayout.title = title
+
+        callLiveDataSets()
+        getIntentData()
+        setupClickActions()
+    }
+
+    private fun setupClickActions() {
         binding.fabLocationSearch.setOnClickListener { view ->
-            mainViewModel.allFavoriteLocations.observe(this) { favoriteLocations ->
-                if (favoriteLocations.size > 0 && isFocused) {
-                    showFavoriteLocations(favoriteLocations)
-                } else {
-                    Toast.makeText(applicationContext, "Please add new location", Toast.LENGTH_LONG)
-                        .show()
-                    openFavoriteScreen()
-                }
+
+            if (myFavoriteList!!.isNotEmpty()) {
+                showFavoriteLocations()
+            } else {
+                Toast.makeText(applicationContext, "Please add new location", Toast.LENGTH_LONG)
+                    .show()
+                openFavoriteScreen()
             }
         }
+    }
+
+    private fun callLiveDataSets() {
+        mainViewModel.allFavoriteLocations.observe(this, { myFavoriteLocations ->
+            myFavoriteList = myFavoriteLocations;
+        })
 
         mainViewModel.forecastLiveData.observe(this, { cityWeather ->
             updateUI(cityWeather)
         })
-
-        getIntentData()
     }
 
     private fun getIntentData() {
@@ -87,12 +90,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showFavoriteLocations(favoriteLocations: List<Favorite>?) {
+    private fun showFavoriteLocations() {
         val builder = MaterialAlertDialogBuilder(this)
         builder.setTitle("Your Favorite Locations")
 
         val locationList = mutableListOf<String>()
-        for (fav in favoriteLocations!!) {
+        for (fav in myFavoriteList!!) {
             locationList.add(fav.locationName)
         }
 
