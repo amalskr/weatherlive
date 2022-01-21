@@ -132,13 +132,6 @@ class MainActivity : AppCompatActivity() {
         binding.mainProgressBar.visibility = View.GONE
     }
 
-    private fun openDetailsView(selectedDay: Days) {
-        val detailsActivity = Intent(applicationContext, DetailsActivity::class.java).apply {
-            putExtra(SELECTED_FORECAST_DAY, selectedDay)
-        }
-        startActivity(detailsActivity)
-    }
-
     private fun searchLocation(location: String) {
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
@@ -175,5 +168,12 @@ class MainActivity : AppCompatActivity() {
         val intentFavorite =
             Intent(applicationContext, SettingsActivity::class.java).apply { }
         startActivity(intentFavorite)
+    }
+
+    private fun openDetailsView(selectedDay: Days) {
+        val detailsActivity = Intent(applicationContext, DetailsActivity::class.java).apply {
+            putExtra(SELECTED_FORECAST_DAY, selectedDay)
+        }
+        startActivity(detailsActivity)
     }
 }
