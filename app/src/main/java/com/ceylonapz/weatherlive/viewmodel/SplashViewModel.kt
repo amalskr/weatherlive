@@ -12,15 +12,19 @@ import com.ceylonapz.weatherlive.utilities.workers.SplashWorker
 
 class SplashViewModel(application: Application) : ViewModel() {
 
-    internal val splashStatusInfo: LiveData<WorkInfo>
+    var splashStatusInfo: LiveData<WorkInfo>
+    val app: Application = application
+    val oneTimeRequest = OneTimeWorkRequest.Builder(SplashWorker::class.java).build()
+    val workManager = WorkManager.getInstance(app)
 
     init {
-        val oneTimeRequest = OneTimeWorkRequest.Builder(SplashWorker::class.java).build()
-        val workManager = WorkManager.getInstance(application)
-
-        workManager.enqueue(oneTimeRequest)
-
         splashStatusInfo = workManager.getWorkInfoByIdLiveData(oneTimeRequest.id)
+    }
+
+    fun callLocationService(isAllowLocation: Boolean) {
+        if (isAllowLocation) {
+            workManager.enqueue(oneTimeRequest)
+        }
     }
 
     @Suppress("UNCHECKED_CAST")
@@ -32,6 +36,5 @@ class SplashViewModel(application: Application) : ViewModel() {
                 throw IllegalArgumentException("Unknown ViewModel class")
             }
         }
-
     }
 }

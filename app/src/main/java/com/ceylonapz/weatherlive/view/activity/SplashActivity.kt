@@ -1,13 +1,17 @@
 package com.ceylonapz.weatherlive.ui
 
+import android.Manifest
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.work.WorkInfo
 import com.ceylonapz.weatherlive.R
 import com.ceylonapz.weatherlive.utilities.CURRENT_LOCATION
 import com.ceylonapz.weatherlive.utilities.GPS_LOCATION
+import com.ceylonapz.weatherlive.utilities.NO_LOCATION
 import com.ceylonapz.weatherlive.viewmodel.SplashViewModel
 
 class SplashActivity : AppCompatActivity() {
@@ -29,16 +33,49 @@ class SplashActivity : AppCompatActivity() {
             if (workInfo != null) {
                 if (workInfo.state == WorkInfo.State.SUCCEEDED) {
                     val status = workInfo.outputData.getString(CURRENT_LOCATION)
-
-                    val intent = Intent(this, MainActivity::class.java).apply {
-                        putExtra(GPS_LOCATION, status)
-                    }
-                    startActivity(intent)
-                    finish()
+                    navigateMainScreen(status)
                 }
 
             }
         })
+
+        getLocationPermission()
+    }
+
+    private fun navigateMainScreen(status: String?) {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            putExtra(GPS_LOCATION, status)
+        }
+        startActivity(intent)
+        finish()
+    }
+
+    private fun getLocationPermission() {
+        val locationPermissionRequest = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                when {
+                    permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                        viewModel.callLocationService(true)
+                    }
+                    permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
+                        viewModel.callLocationService(true)
+                    }
+                    else -> {
+                        viewModel.callLocationService(false)
+                        navigateMainScreen(NO_LOCATION)
+                    }
+                }
+            }
+        }
+
+        locationPermissionRequest.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        )
     }
 
     /*private fun obtieneLocalizacion() {

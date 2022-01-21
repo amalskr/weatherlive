@@ -11,19 +11,6 @@ import android.util.Log
 import androidx.core.app.ActivityCompat
 import java.util.*
 
-private const val TAG = "Util"
-
-/**
- * Method for sleeping for a fixed amount of time to emulate slower work
- */
-fun sleep() {
-    try {
-        Thread.sleep(1000, 0)
-    } catch (e: InterruptedException) {
-        Log.e(TAG, e.message.toString())
-    }
-}
-
 fun getLastKnownLocation(context: Context): String {
     val locationManager: LocationManager =
         context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
