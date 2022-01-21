@@ -26,12 +26,15 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.viewModel = settViewModel
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true);
+        supportActionBar?.setDisplayShowHomeEnabled(true);
+
+        initDataStore()
+
         binding.radioGrpTempeture.setOnCheckedChangeListener { group, checkedId ->
             val tempRadio: RadioButton = findViewById(checkedId)
             updateTempType(tempRadio.text.toString())
         }
-
-        initDataStore()
     }
 
     private fun initDataStore() {
@@ -62,4 +65,8 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
 }

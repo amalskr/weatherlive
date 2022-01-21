@@ -19,11 +19,19 @@ class DetailsActivity : AppCompatActivity() {
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true);
+        supportActionBar?.setDisplayShowHomeEnabled(true);
+
         getIntentData()
     }
 
     private fun getIntentData() {
         val selectedForecastDay = intent.getSerializableExtra(SELECTED_FORECAST_DAY) as Days
         binding.viewDay = selectedForecastDay
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }

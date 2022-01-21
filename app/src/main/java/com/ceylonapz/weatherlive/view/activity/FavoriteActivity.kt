@@ -26,6 +26,9 @@ class FavoriteActivity : AppCompatActivity() {
         binding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true);
+        supportActionBar?.setDisplayShowHomeEnabled(true);
+
         binding.lifecycleOwner = this
         binding.viewModel = favViewModel
 
@@ -112,5 +115,10 @@ class FavoriteActivity : AppCompatActivity() {
             true -> return getString(R.string.update_location_message)
             false -> return getString(R.string.enter_location_message)
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
     }
 }
