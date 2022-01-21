@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.viewModel = mainViewModel
+        binding.lifecycleOwner = this
 
         setSupportActionBar(findViewById(R.id.toolbar))
         binding.toolbarLayout.title = title
