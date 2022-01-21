@@ -46,18 +46,22 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         binding.toolbarLayout.title = title
 
-        callLiveDataSets()
         getIntentData()
+        callLiveDataSets()
         setupClickActions()
     }
 
     private fun setupClickActions() {
-        binding.fabLocationSearch.setOnClickListener { view ->
+        binding.fabLocationSearch.setOnClickListener {
 
             if (myFavoriteList!!.isNotEmpty()) {
                 showFavoriteLocations()
             } else {
-                Toast.makeText(applicationContext, "Please add new location", Toast.LENGTH_LONG)
+                Toast.makeText(
+                    applicationContext,
+                    getString(R.string.pls_add_new_locartion),
+                    Toast.LENGTH_LONG
+                )
                     .show()
                 openFavoriteScreen()
             }
@@ -66,7 +70,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun callLiveDataSets() {
         mainViewModel.allFavoriteLocations.observe(this, { myFavoriteLocations ->
-            myFavoriteList = myFavoriteLocations;
+            myFavoriteList = myFavoriteLocations
         })
 
         mainViewModel.forecastLiveData.observe(this, { cityWeather ->
@@ -77,11 +81,11 @@ class MainActivity : AppCompatActivity() {
     private fun getIntentData() {
         if (intent != null && intent.getStringExtra(GPS_LOCATION) != null) {
             var gpsLocation = intent.getStringExtra(GPS_LOCATION) as String
-            if (gpsLocation.equals(NO_LOCATION)) {
+            if (gpsLocation == NO_LOCATION) {
                 gpsLocation = "Califonia"
                 Toast.makeText(
                     applicationContext,
-                    "Can't get your current location",
+                    getString(R.string.cant_get_current_location),
                     Toast.LENGTH_LONG
                 )
                     .show()
@@ -92,7 +96,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showFavoriteLocations() {
         val builder = MaterialAlertDialogBuilder(this)
-        builder.setTitle("Your Favorite Locations")
+        builder.setTitle(getString(R.string.your_fav_location))
 
         val locationList = mutableListOf<String>()
         for (fav in myFavoriteList!!) {
@@ -100,7 +104,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         builder.setItems(locationList.toTypedArray()) { dialog, which ->
-            findNewLocation(locationList.get(which))
+            findNewLocation(locationList[which])
         }
 
         val dialog = builder.create()

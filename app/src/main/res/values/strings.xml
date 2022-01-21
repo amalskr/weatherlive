@@ -117,4 +117,7 @@
     <string name="fahrenheit">Fahrenheit</string>
     <string name="celsius">Celsius</string>
     <string name="temperature">Temperature</string>
+    <string name="pls_add_new_locartion">Please add new location</string>
+    <string name="cant_get_current_location">Can\'t get your current location</string>
+    <string name="your_fav_location">Your Favorite Locations</string>
 </resources>
