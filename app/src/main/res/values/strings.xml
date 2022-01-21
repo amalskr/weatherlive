@@ -94,6 +94,7 @@
     <string name="loading_image">loading image</string>
     <string name="fab_search_location">fab search location</string>
     <string name="no_data">No Data</string>
+    <string name="no_data_location">No Saved Favorite Locations</string>
     <string name="humidity">Humidity</string>
     <string name="wind_speed">Wind Speed</string>
     <string name="feel_like">feel like</string>

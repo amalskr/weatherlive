@@ -17,11 +17,14 @@
         android:orientation="vertical"
         tools:context=".view.activity.FavoriteActivity">
 
-        <ProgressBar
-            android:id="@+id/favProgress"
+        <TextView
+            android:id="@+id/txtNoData"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone" />
+            android:layout_centerInParent="true"
+            android:text="@string/no_data_location"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            app:isVisibility="@{!viewModel.hasSavedLocations}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerFavLocation"
@@ -29,6 +32,8 @@
             android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:padding="16dp"
+            android:visibility="gone"
+            app:isVisibility="@{viewModel.hasSavedLocations}"
             app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
             tools:context="com.google.samples.apps.sunflower.GardenActivity"
             tools:listitem="@layout/list_item_favorite" />

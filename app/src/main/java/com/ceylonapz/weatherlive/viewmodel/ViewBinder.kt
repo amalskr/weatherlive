@@ -1,5 +1,6 @@
 package com.ceylonapz.weatherlive.viewmodel
 
+import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
@@ -17,11 +18,11 @@ fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
     }
 }
 
-@BindingAdapter("isFabGone")
-fun bindIsFabGone(view: FloatingActionButton, isGone: Boolean?) {
+@BindingAdapter("isVisibility")
+fun bindViewVisibility(view: View, isGone: Boolean?) {
     if (isGone == null || isGone) {
-        view.hide()
+        view.visibility = View.VISIBLE
     } else {
-        view.show()
+        view.visibility = View.GONE
     }
 }

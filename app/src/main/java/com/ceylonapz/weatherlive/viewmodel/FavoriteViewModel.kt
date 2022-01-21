@@ -11,6 +11,8 @@ import javax.inject.Inject
 class FavoriteViewModel @Inject constructor(private val dbRepository: DatabaseRepository) :
     ViewModel() {
 
+    val hasSavedLocations: MutableLiveData<Boolean> = MutableLiveData<Boolean>(false)
+
     //get all saved locations
     val allFavoriteLocations: LiveData<List<Favorite>> =
         dbRepository.getAllLocations().asLiveData()

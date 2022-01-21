@@ -52,6 +52,7 @@ class FavoriteActivity : AppCompatActivity() {
 
     private fun subscribeUi(adapter: FavoriteLocationAdapter) {
         favViewModel.allFavoriteLocations.observe(this) { favoriteLocations ->
+            favViewModel.hasSavedLocations.postValue(favoriteLocations.isNotEmpty())
             adapter.submitList(favoriteLocations)
         }
     }
