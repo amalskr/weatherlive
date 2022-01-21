@@ -20,6 +20,7 @@ import com.ceylonapz.weatherlive.utilities.SELECTED_FORECAST_DAY
 import com.ceylonapz.weatherlive.utilities.db.Favorite
 import com.ceylonapz.weatherlive.view.activity.DetailsActivity
 import com.ceylonapz.weatherlive.view.activity.FavoriteActivity
+import com.ceylonapz.weatherlive.view.activity.SettingsActivity
 import com.ceylonapz.weatherlive.viewmodel.MainViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
@@ -71,13 +72,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun getIntentData() {
-        var gpsLocation = intent.getStringExtra(GPS_LOCATION) as String
-        if (gpsLocation.equals(NO_LOCATION)) {
-            gpsLocation = "Califonia"
-            Toast.makeText(applicationContext, "Can't get your current location", Toast.LENGTH_LONG)
-                .show()
+        if (intent != null && intent.getStringExtra(GPS_LOCATION) != null) {
+            var gpsLocation = intent.getStringExtra(GPS_LOCATION) as String
+            if (gpsLocation.equals(NO_LOCATION)) {
+                gpsLocation = "Califonia"
+                Toast.makeText(
+                    applicationContext,
+                    "Can't get your current location",
+                    Toast.LENGTH_LONG
+                )
+                    .show()
+            }
+            findNewLocation(gpsLocation)
         }
-        findNewLocation(gpsLocation)
     }
 
     private fun showFavoriteLocations(favoriteLocations: List<Favorite>?) {
@@ -143,7 +150,10 @@ class MainActivity : AppCompatActivity() {
                 openFavoriteScreen()
                 true
             }
-            R.id.action_settings -> true
+            R.id.action_settings -> {
+                openSettingsScreen()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -151,6 +161,12 @@ class MainActivity : AppCompatActivity() {
     private fun openFavoriteScreen() {
         val intentFavorite =
             Intent(applicationContext, FavoriteActivity::class.java).apply { }
+        startActivity(intentFavorite)
+    }
+
+    private fun openSettingsScreen() {
+        val intentFavorite =
+            Intent(applicationContext, SettingsActivity::class.java).apply { }
         startActivity(intentFavorite)
     }
 }
