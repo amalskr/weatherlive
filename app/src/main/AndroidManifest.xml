@@ -21,14 +21,14 @@
         <activity
             android:name=".view.activity.SettingsActivity"
             android:exported="true"
-            android:label="@string/action_settings"/>
+            android:label="@string/action_settings" />
         <activity
             android:name=".view.activity.FavoriteActivity"
             android:exported="false"
-            android:label="@string/action_favorite"/>
+            android:label="@string/action_favorite" />
         <activity
             android:name=".view.activity.DetailsActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.SplashActivity"
             android:exported="true"

@@ -18,6 +18,7 @@ import com.ceylonapz.weatherlive.utilities.GPS_LOCATION
 import com.ceylonapz.weatherlive.utilities.NO_LOCATION
 import com.ceylonapz.weatherlive.utilities.SELECTED_FORECAST_DAY
 import com.ceylonapz.weatherlive.utilities.db.Favorite
+import com.ceylonapz.weatherlive.utilities.network.util.NetworkConnection
 import com.ceylonapz.weatherlive.view.activity.DetailsActivity
 import com.ceylonapz.weatherlive.view.activity.FavoriteActivity
 import com.ceylonapz.weatherlive.view.activity.SettingsActivity
@@ -31,10 +32,12 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private var isNetworkConencted: Boolean = false
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel: MainViewModel by viewModels()
     private var myFavoriteList: List<Favorite>? = null
     private var searchJob: Job? = null
+    private var gpsLocation: String? = "Califonia"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,9 +50,17 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         binding.toolbarLayout.title = title
 
-        getIntentData()
+        startNetworkChecker()
         callLiveDataSets()
         setupClickActions()
+    }
+
+    private fun startNetworkChecker() {
+        val networkConnection = NetworkConnection(applicationContext)
+        networkConnection.observe(this) { isConnected ->
+            isNetworkConencted = isConnected
+            getIntentData()
+        }
     }
 
     private fun setupClickActions() {
@@ -81,9 +92,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun getIntentData() {
         if (intent != null && intent.getStringExtra(GPS_LOCATION) != null) {
-            var gpsLocation = intent.getStringExtra(GPS_LOCATION) as String
+            gpsLocation = intent.getStringExtra(GPS_LOCATION) as String
             if (gpsLocation == NO_LOCATION) {
-                gpsLocation = "Califonia"
                 Toast.makeText(
                     applicationContext,
                     getString(R.string.cant_get_current_location),
@@ -91,7 +101,7 @@ class MainActivity : AppCompatActivity() {
                 )
                     .show()
             }
-            findNewLocation(gpsLocation)
+            findNewLocation()
         }
     }
 
@@ -105,18 +115,24 @@ class MainActivity : AppCompatActivity() {
         }
 
         builder.setItems(locationList.toTypedArray()) { dialog, which ->
-            findNewLocation(locationList[which])
+            gpsLocation = locationList[which]
+            findNewLocation()
         }
 
         val dialog = builder.create()
         dialog.show()
     }
 
-    private fun findNewLocation(location: String) {
-        binding.mainProgressBar.visibility = View.VISIBLE
-        binding.recyclerDay.visibility = View.GONE
-        binding.txtNoData.visibility = View.GONE
-        searchLocation(location)
+    private fun findNewLocation() {
+        if (isNetworkConencted) {
+            binding.mainProgressBar.visibility = View.VISIBLE
+            binding.recyclerDay.visibility = View.GONE
+            binding.txtNoData.visibility = View.GONE
+            searchLocation(gpsLocation!!)
+        } else {
+            Toast.makeText(applicationContext, getString(R.string.no_network), Toast.LENGTH_LONG)
+                .show()
+        }
     }
 
     private fun updateUI(cityWeather: CityWeather?) {
