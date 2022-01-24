@@ -50,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         binding.toolbarLayout.title = title
 
+        getIntentData()
         startNetworkChecker()
         callLiveDataSets()
         setupClickActions()
@@ -59,7 +60,7 @@ class MainActivity : AppCompatActivity() {
         val networkConnection = NetworkConnection(applicationContext)
         networkConnection.observe(this) { isConnected ->
             isNetworkConencted = isConnected
-            getIntentData()
+            findNewLocation()
         }
     }
 
@@ -101,7 +102,6 @@ class MainActivity : AppCompatActivity() {
                 )
                     .show()
             }
-            findNewLocation()
         }
     }
 
