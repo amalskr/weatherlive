@@ -19,6 +19,7 @@ import com.ceylonapz.weatherlive.utilities.NO_LOCATION
 import com.ceylonapz.weatherlive.utilities.SELECTED_FORECAST_DAY
 import com.ceylonapz.weatherlive.utilities.db.Favorite
 import com.ceylonapz.weatherlive.utilities.network.util.NetworkConnection
+import com.ceylonapz.weatherlive.utilities.prefstore.SettingsDataStore
 import com.ceylonapz.weatherlive.view.activity.DetailsActivity
 import com.ceylonapz.weatherlive.view.activity.FavoriteActivity
 import com.ceylonapz.weatherlive.view.activity.SettingsActivity
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         binding.toolbarLayout.title = title
 
+        mainViewModel.setDataStore(SettingsDataStore.getInstance(applicationContext))
         getIntentData()
         startNetworkChecker()
         callLiveDataSets()
@@ -89,6 +91,12 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.forecastLiveData.observe(this, { cityWeather ->
             updateUI(cityWeather)
         })
+
+        mainViewModel.getSelectedType()
+            .observe(this, { type ->
+                println("tigger updated.")
+                mainViewModel.selecetdTempType.postValue(type)
+            })
     }
 
     private fun getIntentData() {

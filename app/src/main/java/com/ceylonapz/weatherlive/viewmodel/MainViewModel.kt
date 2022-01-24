@@ -9,8 +9,11 @@ import com.ceylonapz.weatherlive.utilities.db.DatabaseRepository
 import com.ceylonapz.weatherlive.utilities.db.Favorite
 import com.ceylonapz.weatherlive.utilities.di.ResourcesProvider
 import com.ceylonapz.weatherlive.utilities.network.api.ForecastRepository
+import com.ceylonapz.weatherlive.utilities.prefstore.SettingsDataStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -26,6 +29,9 @@ class MainViewModel @Inject constructor(
     private val TAG = "appRes"
     val forecastLiveData: MutableLiveData<CityWeather?> = MutableLiveData<CityWeather?>()
     var cityWeatherRes: CityWeather? = null
+    lateinit var pref: SettingsDataStore
+    var selecetdTempType: MutableLiveData<String> =
+        MutableLiveData(res.getString(R.string.fahrenheit_format))
 
     val forecastDateTime: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
@@ -68,18 +74,35 @@ class MainViewModel @Inject constructor(
     }
 
     fun getTemperature(temperature: Double): String {
-        return convertTemperature(temperature, "Celsius")
+        return convertTemperature(temperature, res.getString(R.string.celsius_name))
     }
 
-    fun getTemperatureType(): String {
-        val tempType = "Celsius"
-        return when (tempType) {
-            "Celsius" -> res.getString(R.string.tempe_celsius)
-            "Fahrenheit" -> res.getString(R.string.tempe_fahrenheit)
-            else -> ("")
+    fun getSelectedTempetureName() {
+        viewModelScope.launch {
+            pref.getTemperatureType.flowOn(Dispatchers.IO).collect { selectedType ->
+                selecetdTempType.postValue(selectedType)
+            }
         }
     }
 
+    fun getTemperatureFormat(type: String): String {
+        return when (type) {
+            res.getString(R.string.celsius_name) -> res.getString(R.string.celsius_format)
+            res.getString(R.string.fahrenheit_name) -> res.getString(R.string.fahrenheit_format)
+            else -> {
+                ""
+            }
+        }
+    }
+
+    fun setDataStore(pref: SettingsDataStore) {
+        this.pref = pref
+        getSelectedTempetureName()
+    }
+
+    fun getSelectedType(): LiveData<String> {
+        return pref.getTemperatureType.asLiveData()
+    }
 
 }
 

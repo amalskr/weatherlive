@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import com.ceylonapz.weatherlive.R
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -15,12 +16,19 @@ import java.io.IOException
 class SettingsDataStore(context: Context) {
 
     companion object {
+        @Volatile
+        private var INSTANCE: SettingsDataStore? = null
         private const val PREFERENCES_SETTINGS = "settings_preferance"
-        private var instance: SettingsDataStore? = null
 
         fun getInstance(context: Context): SettingsDataStore {
-            return instance ?: synchronized(this) {
-                instance ?: SettingsDataStore(context).also { instance = it }
+            return INSTANCE ?: synchronized(this) {
+                INSTANCE?.let {
+                    return it
+                }
+
+                val instance = SettingsDataStore(context)
+                INSTANCE = instance
+                instance
             }
         }
     }
@@ -47,6 +55,6 @@ class SettingsDataStore(context: Context) {
             }
         }
         .map { preferences ->
-            preferences[USER_TEMPERATURE] ?: "Fahrenheit"
+            preferences[USER_TEMPERATURE] ?: context.getString(R.string.fahrenheit_name)
         }
 }

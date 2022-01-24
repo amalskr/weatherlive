@@ -52,12 +52,12 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun updateLayout(layoutValue: String?) {
         when (layoutValue) {
-            getString(R.string.fahrenheit) -> binding.radioGrpTempeture.check(
+            getString(R.string.fahrenheit_name) -> binding.radioGrpTempeture.check(
                 binding.radioGrpTempeture.getChildAt(
                     0
                 ).getId()
             );
-            getString(R.string.celsius) -> binding.radioGrpTempeture.check(
+            getString(R.string.celsius_name) -> binding.radioGrpTempeture.check(
                 binding.radioGrpTempeture.getChildAt(
                     1
                 ).getId()
