@@ -59,14 +59,18 @@ fun convertTemperature(degree: Double, type: String): String {
     return when (type) {
         "Celsius" -> {
             val tempeCelsius = (degree - 32) * 5 / 9
-            "$tempeCelsius°C"
+            roundTemp(tempeCelsius) + "°C"
         }
         "fahrenheit" -> {
             val tempeFahren: Double = degree * 9 / 5 + 32
-            "$tempeFahren°F"
+            roundTemp(tempeFahren) + "°F"
         }
         else -> {
             "$degree"
         }
     }
+}
+
+private fun roundTemp(temph: Double): String {
+    return String.format("%.1f", temph)
 }
