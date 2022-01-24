@@ -2,9 +2,12 @@ package com.ceylonapz.weatherlive.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.ceylonapz.weatherlive.R
 import com.ceylonapz.weatherlive.model.CityWeather
+import com.ceylonapz.weatherlive.utilities.convertTemperature
 import com.ceylonapz.weatherlive.utilities.db.DatabaseRepository
 import com.ceylonapz.weatherlive.utilities.db.Favorite
+import com.ceylonapz.weatherlive.utilities.di.ResourcesProvider
 import com.ceylonapz.weatherlive.utilities.network.api.ForecastRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +19,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val apiRepo: ForecastRepository,
-    private val dbRepo: DatabaseRepository
+    private val dbRepo: DatabaseRepository,
+    private val res: ResourcesProvider
 ) : ViewModel() {
 
     private val TAG = "appRes"
@@ -61,6 +65,19 @@ class MainViewModel @Inject constructor(
         val time = cityWeatherRes!!.currentConditions.datetime
 
         forecastDateTime.postValue("$condition | $date $time")
+    }
+
+    fun getTemperature(temperature: Double): String {
+        return convertTemperature(temperature, "Celsius")
+    }
+
+    fun getTemperatureType(): String {
+        val tempType = "Celsius"
+        return when (tempType) {
+            "Celsius" -> res.getString(R.string.tempe_celsius)
+            "Fahrenheit" -> res.getString(R.string.tempe_fahrenheit)
+            else -> ("")
+        }
     }
 
 

@@ -56,15 +56,33 @@
                             android:src="@drawable/ic_forecast_fair_day"
                             app:imageFromUrl="@{viewModel.forecastLiveData.currentConditions.icon}" />
 
-                        <TextView
-                            android:id="@+id/txtTemperature"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:id="@+id/viewTemperature"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/imgCondition"
                             android:gravity="center"
-                            android:text="@{String.valueOf(viewModel.forecastLiveData.currentConditions.temp)}"
-                            android:textAppearance="?attr/textAppearanceHeadline1"
-                            tools:text="25'" />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/txtTemperature"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:text="@{viewModel.getTemperature(viewModel.forecastLiveData.currentConditions.temp)}"
+                                android:textAppearance="?attr/textAppearanceHeadline1"
+                                android:textColor="@color/white"
+                                tools:text="25" />
+
+                            <TextView
+                                android:id="@+id/txtTemperatureType"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@{viewModel.getTemperatureType()}"
+                                android:gravity="center|top"
+                                android:textAppearance="?attr/textAppearanceHeadline3"
+                                tools:text="°F" />
+                        </LinearLayout>
                     </RelativeLayout>
 
 
