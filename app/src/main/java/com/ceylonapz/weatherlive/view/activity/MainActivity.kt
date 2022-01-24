@@ -17,6 +17,7 @@ import com.ceylonapz.weatherlive.model.adapters.ForecastDayAdapter
 import com.ceylonapz.weatherlive.utilities.GPS_LOCATION
 import com.ceylonapz.weatherlive.utilities.NO_LOCATION
 import com.ceylonapz.weatherlive.utilities.SELECTED_FORECAST_DAY
+import com.ceylonapz.weatherlive.utilities.SELECTED_TEMPERATURE
 import com.ceylonapz.weatherlive.utilities.db.Favorite
 import com.ceylonapz.weatherlive.utilities.network.util.NetworkConnection
 import com.ceylonapz.weatherlive.utilities.prefstore.SettingsDataStore
@@ -200,6 +201,7 @@ class MainActivity : AppCompatActivity() {
     private fun openDetailsView(selectedDay: Days) {
         val detailsActivity = Intent(applicationContext, DetailsActivity::class.java).apply {
             putExtra(SELECTED_FORECAST_DAY, selectedDay)
+            putExtra(SELECTED_TEMPERATURE, selectedTempType)
         }
         startActivity(detailsActivity)
     }

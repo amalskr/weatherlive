@@ -7,7 +7,7 @@
 
         <variable
             name="viewDay"
-            type="com.ceylonapz.weatherlive.model.Days" />
+            type="com.ceylonapz.weatherlive.viewmodel.DayItemViewModel" />
     </data>
 
     <LinearLayout
@@ -37,7 +37,7 @@
                     android:id="@+id/txtDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{viewDay.datetime}"
+                    android:text="@{viewDay.day.datetime}"
                     android:textAppearance="?attr/textAppearanceSubtitle1"
                     android:textColor="?attr/colorSurface"
                     tools:text="2021-10-21" />
@@ -46,7 +46,7 @@
                     android:id="@+id/txtMaxMinTemp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{@string/temp_max_min(viewDay.tempmax,viewDay.tempmin)}"
+                    android:text="@{@string/temp_max_min(viewDay.getFormattedTemperture(viewDay.day.tempmax),viewDay.getFormattedTemperture(viewDay.day.tempmin))}"
                     android:textAppearance="?attr/textAppearanceSubtitle1"
                     android:textColor="?attr/colorSurface"
                     tools:text="30 C' | 16 C'" />
@@ -55,7 +55,7 @@
                     android:id="@+id/txtCondition"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{viewDay.conditions}"
+                    android:text="@{viewDay.day.conditions}"
                     android:textAppearance="?attr/textAppearanceHeadline5"
                     android:textColor="?attr/colorSurface"
                     tools:text="Partly Cloud" />
@@ -76,7 +76,7 @@
                     android:layout_height="@dimen/forecast_icon"
                     android:contentDescription="@string/weather_icon"
                     android:src="@drawable/ic_forecast_fair_day"
-                    app:imageFromUrl="@{viewDay.icon}" />
+                    app:imageFromUrl="@{viewDay.day.icon}" />
             </LinearLayout>
             <!--condition icon End-->
 
@@ -159,7 +159,7 @@
                         android:id="@+id/txtWindspeed"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{@string/wind_format(viewDay.windspeed)}"
+                        android:text="@{@string/wind_format(viewDay.day.windspeed)}"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         tools:text="@string/wind_speed" />
 
@@ -168,7 +168,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="@{@string/humidity_format(viewDay.humidity)}"
+                        android:text="@{@string/humidity_format(viewDay.day.humidity)}"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         tools:text="Humidity" />
 
@@ -177,7 +177,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="@{String.valueOf(viewDay.uvindex)}"
+                        android:text="@{String.valueOf(viewDay.day.uvindex)}"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         tools:text="UV Index" />
 
@@ -186,7 +186,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="@{viewDay.sunrise}"
+                        android:text="@{viewDay.day.sunrise}"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         tools:text="Sunrise" />
 
@@ -195,7 +195,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="@{viewDay.sunset}"
+                        android:text="@{viewDay.day.sunset}"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         tools:text="Sunset" />
 
@@ -204,7 +204,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="@{viewDay.description}"
+                        android:text="@{viewDay.day.description}"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         tools:text="Description" />
                 </LinearLayout>

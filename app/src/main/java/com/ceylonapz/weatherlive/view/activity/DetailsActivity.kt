@@ -1,13 +1,12 @@
 package com.ceylonapz.weatherlive.view.activity
 
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
-import com.ceylonapz.weatherlive.R
 import com.ceylonapz.weatherlive.databinding.ActivityDetailsBinding
 import com.ceylonapz.weatherlive.model.Days
 import com.ceylonapz.weatherlive.utilities.SELECTED_FORECAST_DAY
+import com.ceylonapz.weatherlive.utilities.SELECTED_TEMPERATURE
+import com.ceylonapz.weatherlive.viewmodel.DayItemViewModel
 
 class DetailsActivity : AppCompatActivity() {
 
@@ -27,7 +26,8 @@ class DetailsActivity : AppCompatActivity() {
 
     private fun getIntentData() {
         val selectedForecastDay = intent.getSerializableExtra(SELECTED_FORECAST_DAY) as Days
-        binding.viewDay = selectedForecastDay
+        val selectedTemperature = intent.getSerializableExtra(SELECTED_TEMPERATURE) as String
+        binding.viewDay = DayItemViewModel(selectedForecastDay, selectedTemperature)
     }
 
     override fun onSupportNavigateUp(): Boolean {
