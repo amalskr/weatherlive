@@ -74,7 +74,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun getTemperature(temperature: Double): String {
-        return convertTemperature(temperature, res.getString(R.string.celsius_name))
+        return convertTemperature(temperature, selectedTempType.value.toString())
     }
 
     fun getSelectedTempetureName() {
