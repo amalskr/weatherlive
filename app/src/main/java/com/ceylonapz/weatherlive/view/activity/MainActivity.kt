@@ -34,6 +34,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
+    private var cityWeather: CityWeather? = null
     private var isNetworkConencted: Boolean = false
     private lateinit var binding: ActivityMainBinding
     private val mainViewModel: MainViewModel by viewModels()
@@ -91,11 +92,15 @@ class MainActivity : AppCompatActivity() {
         })
 
         mainViewModel.forecastLiveData.observe(this, { cityWeather ->
-            updateUI(cityWeather)
+            this.cityWeather = cityWeather
+            updateUI()
         })
 
         mainViewModel.selectedTempType.observe(this, { type ->
             selectedTempType = type
+            if (gpsLocation == null) {
+                updateUI()
+            }
         })
     }
 
@@ -145,15 +150,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateUI(cityWeather: CityWeather?) {
+    private fun updateUI() {
         if (cityWeather != null) {
             binding.txtNoData.visibility = View.GONE
             binding.recyclerDay.visibility = View.VISIBLE
 
+            mainViewModel.forecastTemperture.postValue(cityWeather!!.currentConditions.temp)
+
             binding.recyclerDay.adapter =
                 ForecastDayAdapter(
                     selectedTempType!!,
-                    cityWeather.days
+                    cityWeather!!.days
                 ) { selectedDay -> openDetailsView(selectedDay) }
             binding.recyclerDay.setHasFixedSize(true)
         } else {

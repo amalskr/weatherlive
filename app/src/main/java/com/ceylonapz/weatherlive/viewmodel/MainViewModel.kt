@@ -31,10 +31,14 @@ class MainViewModel @Inject constructor(
     var cityWeatherRes: CityWeather? = null
     lateinit var pref: SettingsDataStore
     var selectedTempType: MutableLiveData<String> =
-        MutableLiveData(res.getString(R.string.fahrenheit_format))
+        MutableLiveData(res.getString(R.string.fahrenheit_name))
 
     val forecastDateTime: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
+    }
+
+    val forecastTemperture: MutableLiveData<Double> by lazy {
+        MutableLiveData<Double>()
     }
 
     val allFavoriteLocations: LiveData<List<Favorite>> =
