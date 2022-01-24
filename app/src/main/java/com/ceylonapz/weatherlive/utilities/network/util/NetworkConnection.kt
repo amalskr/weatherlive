@@ -35,11 +35,6 @@ class NetworkConnection(private val context: Context) : LiveData<Boolean>() {
         }
     }
 
-    override fun onInactive() {
-        super.onInactive()
-        //connectivityManager.unregisterNetworkCallback(connectivityManagerCallback())
-    }
-
     private fun connectivityManagerCallback(): ConnectivityManager.NetworkCallback {
 
         networkConnectionCallback = object : ConnectivityManager.NetworkCallback() {

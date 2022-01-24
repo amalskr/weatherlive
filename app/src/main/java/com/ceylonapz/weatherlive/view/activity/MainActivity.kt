@@ -133,10 +133,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun findNewLocation() {
         if (isNetworkConencted) {
-            binding.mainProgressBar.visibility = View.VISIBLE
-            binding.recyclerDay.visibility = View.GONE
-            binding.txtNoData.visibility = View.GONE
-            searchLocation(gpsLocation!!)
+            if (gpsLocation != null) {
+                binding.mainProgressBar.visibility = View.VISIBLE
+                binding.recyclerDay.visibility = View.GONE
+                binding.txtNoData.visibility = View.GONE
+                searchLocation()
+            }
         } else {
             Toast.makeText(applicationContext, getString(R.string.no_network), Toast.LENGTH_LONG)
                 .show()
@@ -160,10 +162,11 @@ class MainActivity : AppCompatActivity() {
         binding.mainProgressBar.visibility = View.GONE
     }
 
-    private fun searchLocation(location: String) {
+    private fun searchLocation() {
         searchJob?.cancel()
         searchJob = lifecycleScope.launch {
-            mainViewModel.getForecastLocation(location)
+            mainViewModel.getForecastLocation(gpsLocation!!)
+            gpsLocation = null
         }
     }
 
