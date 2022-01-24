@@ -55,15 +55,31 @@ fun getAddressInfo(context: Context, latitude: Double, longitude: Double): Strin
     return "$city $local $country"
 }
 
-fun convertTemperature(degree: Double, type: String): String {
+fun convertTemperature(degree: Double, type: String, isLabel: Boolean): String {
     return when (type) {
         "Celsius" -> {
             val tempeCelsius = (degree - 32) * 5 / 9
-            roundTemp(tempeCelsius)
+            when {
+                isLabel -> {
+                    roundTemp(tempeCelsius) + "°C"
+                }
+                else -> {
+                    roundTemp(tempeCelsius)
+                }
+            }
+
         }
-        "fahrenheit" -> {
-            val tempeFahren: Double = degree * 9 / 5 + 32
-            roundTemp(tempeFahren)
+        "Fahrenheit" -> {
+            //val tempeFahren: Double = degree * 9 / 5 + 32
+            val tempeFahren: Double = degree// Fahrenheit is default values. so no need to convert it
+            when {
+                isLabel -> {
+                    roundTemp(tempeFahren) + "°F"
+                }
+                else -> {
+                    roundTemp(tempeFahren)
+                }
+            }
         }
         else -> {
             "$degree"

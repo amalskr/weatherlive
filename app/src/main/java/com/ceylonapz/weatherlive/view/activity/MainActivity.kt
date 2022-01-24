@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     private var myFavoriteList: List<Favorite>? = null
     private var searchJob: Job? = null
     private var gpsLocation: String? = "Califonia"
+    private var selectedTempType: String? = "Fahrenheit"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,6 +91,10 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.forecastLiveData.observe(this, { cityWeather ->
             updateUI(cityWeather)
+        })
+
+        mainViewModel.selectedTempType.observe(this, { type ->
+            selectedTempType = type
         })
     }
 
@@ -143,7 +148,10 @@ class MainActivity : AppCompatActivity() {
             binding.recyclerDay.visibility = View.VISIBLE
 
             binding.recyclerDay.adapter =
-                ForecastDayAdapter(cityWeather.days) { selectedDay -> openDetailsView(selectedDay) }
+                ForecastDayAdapter(
+                    selectedTempType!!,
+                    cityWeather.days
+                ) { selectedDay -> openDetailsView(selectedDay) }
             binding.recyclerDay.setHasFixedSize(true)
         } else {
             binding.txtNoData.visibility = View.VISIBLE
