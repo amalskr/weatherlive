@@ -30,7 +30,7 @@ class MainViewModel @Inject constructor(
     val forecastLiveData: MutableLiveData<CityWeather?> = MutableLiveData<CityWeather?>()
     var cityWeatherRes: CityWeather? = null
     lateinit var pref: SettingsDataStore
-    var selecetdTempType: MutableLiveData<String> =
+    var selectedTempType: MutableLiveData<String> =
         MutableLiveData(res.getString(R.string.fahrenheit_format))
 
     val forecastDateTime: MutableLiveData<String> by lazy {
@@ -80,7 +80,7 @@ class MainViewModel @Inject constructor(
     fun getSelectedTempetureName() {
         viewModelScope.launch {
             pref.getTemperatureType.flowOn(Dispatchers.IO).collect { selectedType ->
-                selecetdTempType.postValue(selectedType)
+                selectedTempType.postValue(selectedType)
             }
         }
     }
@@ -98,10 +98,6 @@ class MainViewModel @Inject constructor(
     fun setDataStore(pref: SettingsDataStore) {
         this.pref = pref
         getSelectedTempetureName()
-    }
-
-    fun getSelectedType(): LiveData<String> {
-        return pref.getTemperatureType.asLiveData()
     }
 
 }

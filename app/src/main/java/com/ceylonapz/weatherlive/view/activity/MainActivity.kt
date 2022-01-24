@@ -91,12 +91,6 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.forecastLiveData.observe(this, { cityWeather ->
             updateUI(cityWeather)
         })
-
-        mainViewModel.getSelectedType()
-            .observe(this, { type ->
-                println("tigger updated.")
-                mainViewModel.selecetdTempType.postValue(type)
-            })
     }
 
     private fun getIntentData() {
