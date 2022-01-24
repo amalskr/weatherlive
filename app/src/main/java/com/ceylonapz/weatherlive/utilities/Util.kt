@@ -7,9 +7,9 @@ import android.location.Address
 import android.location.Geocoder
 import android.location.Location
 import android.location.LocationManager
-import android.util.Log
 import androidx.core.app.ActivityCompat
 import java.util.*
+
 
 fun getLastKnownLocation(context: Context): String {
     val locationManager: LocationManager =
@@ -53,4 +53,20 @@ fun getAddressInfo(context: Context, latitude: Double, longitude: Double): Strin
     val local: String = addresses[0].locality
     val country: String = addresses[0].countryName
     return "$city $local $country"
+}
+
+fun convertTemperature(degree: Double, type: String): String {
+    return when (type) {
+        "Celsius" -> {
+            val tempeCelsius = (degree - 32) * 5 / 9
+            "$tempeCelsius°C"
+        }
+        "fahrenheit" -> {
+            val tempeFahren: Double = degree * 9 / 5 + 32
+            "$tempeFahren°F"
+        }
+        else -> {
+            "$degree"
+        }
+    }
 }
