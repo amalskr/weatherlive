@@ -20,7 +20,6 @@ import com.ceylonapz.weatherlive.utilities.SELECTED_FORECAST_DAY
 import com.ceylonapz.weatherlive.utilities.SELECTED_TEMPERATURE
 import com.ceylonapz.weatherlive.utilities.db.Favorite
 import com.ceylonapz.weatherlive.utilities.network.util.NetworkConnection
-import com.ceylonapz.weatherlive.utilities.prefstore.SettingsDataStore
 import com.ceylonapz.weatherlive.view.activity.DetailsActivity
 import com.ceylonapz.weatherlive.view.activity.FavoriteActivity
 import com.ceylonapz.weatherlive.view.activity.SettingsActivity
@@ -54,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         binding.toolbarLayout.title = title
 
-        mainViewModel.setDataStore(SettingsDataStore.getInstance(applicationContext))
+        //mainViewModel.setDataStore(SettingsDataStore.getInstance(applicationContext))
         getIntentData()
         startNetworkChecker()
         callLiveDataSets()

@@ -9,11 +9,10 @@ import com.ceylonapz.weatherlive.utilities.db.DatabaseRepository
 import com.ceylonapz.weatherlive.utilities.db.Favorite
 import com.ceylonapz.weatherlive.utilities.di.ResourcesProvider
 import com.ceylonapz.weatherlive.utilities.network.api.ForecastRepository
-import com.ceylonapz.weatherlive.utilities.prefstore.SettingsDataStore
+import com.ceylonapz.weatherlive.utilities.prefstore.DataStoreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -23,15 +22,14 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(
     private val apiRepo: ForecastRepository,
     private val dbRepo: DatabaseRepository,
+    private val prefRepo: DataStoreRepository,
     private val res: ResourcesProvider
 ) : ViewModel() {
 
     private val TAG = "appRes"
     val forecastLiveData: MutableLiveData<CityWeather?> = MutableLiveData<CityWeather?>()
     var cityWeatherRes: CityWeather? = null
-    lateinit var pref: SettingsDataStore
-    var selectedTempType: MutableLiveData<String> =
-        MutableLiveData(res.getString(R.string.fahrenheit_name))
+    var selectedTempType: MutableLiveData<String> = MutableLiveData("")
 
     val forecastDateTime: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
@@ -46,6 +44,18 @@ class MainViewModel @Inject constructor(
 
     val myFavList: MutableLiveData<List<Favorite>> by lazy {
         MutableLiveData<List<Favorite>>()
+    }
+
+    init {
+        getPrefSelections()
+    }
+
+    private fun getPrefSelections() {
+        viewModelScope.launch(Dispatchers.IO) {
+            prefRepo.getTemperatureType().collect { savedTemperType ->
+                selectedTempType.postValue(savedTemperType)
+            }
+        }
     }
 
     fun getFevList() {
@@ -81,14 +91,6 @@ class MainViewModel @Inject constructor(
         return convertTemperature(temperature, selectedTempType.value.toString(), false)
     }
 
-    fun getSelectedTempetureName() {
-        viewModelScope.launch {
-            pref.getTemperatureType.flowOn(Dispatchers.IO).collect { selectedType ->
-                selectedTempType.postValue(selectedType)
-            }
-        }
-    }
-
     fun getTemperatureFormat(type: String): String {
         return when (type) {
             res.getString(R.string.celsius_name) -> res.getString(R.string.celsius_format)
@@ -97,11 +99,6 @@ class MainViewModel @Inject constructor(
                 ""
             }
         }
-    }
-
-    fun setDataStore(pref: SettingsDataStore) {
-        this.pref = pref
-        getSelectedTempetureName()
     }
 
 }
