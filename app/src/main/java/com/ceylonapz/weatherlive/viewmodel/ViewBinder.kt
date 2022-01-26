@@ -1,7 +1,9 @@
 package com.ceylonapz.weatherlive.viewmodel
 
+import android.content.Context
 import android.view.View
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.ceylonapz.weatherlive.R

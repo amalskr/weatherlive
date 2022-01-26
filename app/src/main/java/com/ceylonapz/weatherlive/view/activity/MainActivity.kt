@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -19,17 +18,20 @@ import com.ceylonapz.weatherlive.utilities.NO_LOCATION
 import com.ceylonapz.weatherlive.utilities.SELECTED_FORECAST_DAY
 import com.ceylonapz.weatherlive.utilities.SELECTED_TEMPERATURE
 import com.ceylonapz.weatherlive.utilities.db.Favorite
-import com.ceylonapz.weatherlive.utilities.network.util.NetworkConnection
+import com.ceylonapz.weatherlive.utilities.network.util.Status
 import com.ceylonapz.weatherlive.view.activity.DetailsActivity
 import com.ceylonapz.weatherlive.view.activity.FavoriteActivity
 import com.ceylonapz.weatherlive.view.activity.SettingsActivity
 import com.ceylonapz.weatherlive.viewmodel.MainViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.infinity.movieapp.extensions.toast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 
+@FlowPreview
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
@@ -53,18 +55,24 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.toolbar))
         binding.toolbarLayout.title = title
 
-        //mainViewModel.setDataStore(SettingsDataStore.getInstance(applicationContext))
+        networkStatusTracker()
         getIntentData()
-        startNetworkChecker()
         callLiveDataSets()
         setupClickActions()
     }
 
-    private fun startNetworkChecker() {
-        val networkConnection = NetworkConnection(applicationContext)
-        networkConnection.observe(this) { isConnected ->
-            isNetworkConencted = isConnected
-            findNewLocation()
+    private fun networkStatusTracker() {
+        mainViewModel.networkStatus.observe(this) { networkStatus ->
+            when (networkStatus) {
+                is Status.Fetched -> {
+                    isNetworkConencted = true
+                    findNewLocation()
+                }
+                is Status.Error -> {
+                    isNetworkConencted = false
+                    this.toast(getString(R.string.no_network))
+                }
+            }
         }
     }
 
@@ -74,45 +82,35 @@ class MainActivity : AppCompatActivity() {
             if (myFavoriteList!!.isNotEmpty()) {
                 showFavoriteLocations()
             } else {
-                Toast.makeText(
-                    applicationContext,
-                    getString(R.string.pls_add_new_locartion),
-                    Toast.LENGTH_LONG
-                )
-                    .show()
+                this.toast(getString(R.string.pls_add_new_locartion))
                 openFavoriteScreen()
             }
         }
     }
 
     private fun callLiveDataSets() {
-        mainViewModel.allFavoriteLocations.observe(this, { myFavoriteLocations ->
+        mainViewModel.allFavoriteLocations.observe(this) { myFavoriteLocations ->
             myFavoriteList = myFavoriteLocations
-        })
+        }
 
-        mainViewModel.forecastLiveData.observe(this, { cityWeather ->
+        mainViewModel.forecastLiveData.observe(this) { cityWeather ->
             this.cityWeather = cityWeather
             updateUI()
-        })
+        }
 
-        mainViewModel.selectedTempType.observe(this, { type ->
+        mainViewModel.selectedTempType.observe(this) { type ->
             selectedTempType = type
             if (gpsLocation == null) {
                 updateUI()
             }
-        })
+        }
     }
 
     private fun getIntentData() {
         if (intent != null && intent.getStringExtra(GPS_LOCATION) != null) {
             gpsLocation = intent.getStringExtra(GPS_LOCATION) as String
             if (gpsLocation == NO_LOCATION) {
-                Toast.makeText(
-                    applicationContext,
-                    getString(R.string.cant_get_current_location),
-                    Toast.LENGTH_LONG
-                )
-                    .show()
+                this.toast(getString(R.string.cant_get_current_location))
             }
         }
     }
@@ -144,8 +142,7 @@ class MainActivity : AppCompatActivity() {
                 searchLocation()
             }
         } else {
-            Toast.makeText(applicationContext, getString(R.string.no_network), Toast.LENGTH_LONG)
-                .show()
+            this.toast(getString(R.string.no_network))
         }
     }
 

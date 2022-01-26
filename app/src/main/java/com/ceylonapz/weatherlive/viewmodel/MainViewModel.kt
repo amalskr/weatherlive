@@ -1,5 +1,6 @@
 package com.ceylonapz.weatherlive.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
 import com.ceylonapz.weatherlive.R
@@ -9,17 +10,24 @@ import com.ceylonapz.weatherlive.utilities.db.DatabaseRepository
 import com.ceylonapz.weatherlive.utilities.db.Favorite
 import com.ceylonapz.weatherlive.utilities.di.ResourcesProvider
 import com.ceylonapz.weatherlive.utilities.network.api.ForecastRepository
+import com.ceylonapz.weatherlive.utilities.network.util.Status
+import com.ceylonapz.weatherlive.utilities.network.util.NetworkStatusTracker
+import com.ceylonapz.weatherlive.utilities.network.util.map
 import com.ceylonapz.weatherlive.utilities.prefstore.DataStoreRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
+@FlowPreview
 @HiltViewModel
 class MainViewModel @Inject constructor(
+    @ApplicationContext context: Context,
     private val apiRepo: ForecastRepository,
     private val dbRepo: DatabaseRepository,
     private val prefRepo: DataStoreRepository,
@@ -46,8 +54,20 @@ class MainViewModel @Inject constructor(
         MutableLiveData<List<Favorite>>()
     }
 
+    var networkStatus: LiveData<Status>
+
     init {
+        networkStatus = networkTracker(context)
         getPrefSelections()
+    }
+
+    private fun networkTracker(context: Context): LiveData<Status> {
+        return NetworkStatusTracker(context).networkStatus
+            .map(
+                onAvailable = { Status.Fetched },
+                onUnavailable = { Status.Error }
+            )
+            .asLiveData(Dispatchers.IO)
     }
 
     private fun getPrefSelections() {
