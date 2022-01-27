@@ -65,14 +65,3 @@ inline fun <Result> Flow<NetworkStatus>.map(
         NetworkStatus.Available -> onAvailable()
     }
 }
-
-@FlowPreview
-inline fun <Result> Flow<NetworkStatus>.flatMap(
-    crossinline onUnavailable: suspend () -> Flow<Result>,
-    crossinline onAvailable: suspend () -> Flow<Result>
-): Flow<Result> = flatMapConcat { status ->
-    when (status) {
-        NetworkStatus.Unavailable -> onUnavailable()
-        NetworkStatus.Available -> onAvailable()
-    }
-}
