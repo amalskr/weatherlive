@@ -13,7 +13,7 @@ import javax.inject.Singleton
 //RoomTask #3
 @InstallIn(SingletonComponent::class) //-> (Hilt generates)
 @Module
-class DatabaseModule {
+object DatabaseModule {
 
     @Singleton
     @Provides
