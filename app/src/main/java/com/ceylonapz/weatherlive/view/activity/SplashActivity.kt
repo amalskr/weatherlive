@@ -1,7 +1,6 @@
 package com.ceylonapz.weatherlive.ui
 
 import android.Manifest
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
@@ -13,6 +12,8 @@ import com.ceylonapz.weatherlive.utilities.CURRENT_LOCATION
 import com.ceylonapz.weatherlive.utilities.GPS_LOCATION
 import com.ceylonapz.weatherlive.utilities.NO_LOCATION
 import com.ceylonapz.weatherlive.viewmodel.SplashViewModel
+import com.infinity.movieapp.extensions.navigateActivity
+import kotlinx.coroutines.FlowPreview
 
 class SplashActivity : AppCompatActivity() {
 
@@ -42,12 +43,11 @@ class SplashActivity : AppCompatActivity() {
         getLocationPermission()
     }
 
+    @FlowPreview
     private fun navigateMainScreen(status: String?) {
-        val intent = Intent(this, MainActivity::class.java).apply {
-            putExtra(GPS_LOCATION, status)
-        }
-        startActivity(intent)
-        finish()
+        val mainBundle = Bundle()
+        mainBundle.putString(GPS_LOCATION, status)
+        navigateActivity(MainActivity::class.java, mainBundle, finish())
     }
 
     private fun getLocationPermission() {

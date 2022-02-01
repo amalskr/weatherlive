@@ -24,6 +24,7 @@ import com.ceylonapz.weatherlive.view.activity.FavoriteActivity
 import com.ceylonapz.weatherlive.view.activity.SettingsActivity
 import com.ceylonapz.weatherlive.viewmodel.MainViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.infinity.movieapp.extensions.navigateActivity
 import com.infinity.movieapp.extensions.toast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.FlowPreview
@@ -205,10 +206,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun openDetailsView(selectedDay: Days) {
-        val detailsActivity = Intent(applicationContext, DetailsActivity::class.java).apply {
-            putExtra(SELECTED_FORECAST_DAY, selectedDay)
-            putExtra(SELECTED_TEMPERATURE, selectedTempType)
-        }
-        startActivity(detailsActivity)
+        val detailsBundle = Bundle()
+        detailsBundle.putSerializable(SELECTED_FORECAST_DAY, selectedDay)
+        detailsBundle.putString(SELECTED_TEMPERATURE, selectedTempType)
+        navigateActivity(DetailsActivity::class.java,detailsBundle,null)
     }
 }
