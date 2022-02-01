@@ -3,6 +3,7 @@ package com.ceylonapz.weatherlive.utilities.db
 import javax.inject.Inject
 import javax.inject.Singleton
 
+//RoomTask #4
 @Singleton
 class DatabaseRepository @Inject constructor(private val favoriteDao: FavoriteDao) {
 

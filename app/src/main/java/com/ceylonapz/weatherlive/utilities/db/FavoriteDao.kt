@@ -3,6 +3,7 @@ package com.ceylonapz.weatherlive.utilities.db
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
+//RoomTask #1
 @Dao
 interface FavoriteDao {
     @Query("SELECT * from favorite ORDER BY locationName ASC")

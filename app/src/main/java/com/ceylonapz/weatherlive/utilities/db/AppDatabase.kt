@@ -6,13 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.ceylonapz.weatherlive.utilities.DATABASE_NAME
 
+//RoomTask #2
 @Database(entities = [Favorite::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun favoriteDao(): FavoriteDao
 
     companion object {
 
-        @Volatile
+        @Volatile //-> (meaning that writes to this field are immediately made visible to other threads)
         private var instance: AppDatabase? = null
 
         fun getInstance(context: Context): AppDatabase {

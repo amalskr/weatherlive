@@ -10,7 +10,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-@InstallIn(SingletonComponent::class)
+//RoomTask #3
+@InstallIn(SingletonComponent::class) //-> (Hilt generates)
 @Module
 class DatabaseModule {
 
