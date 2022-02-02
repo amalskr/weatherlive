@@ -2,6 +2,7 @@ package com.ceylonapz.weatherlive.model.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ceylonapz.weatherlive.databinding.DayListItemBinding
 import com.ceylonapz.weatherlive.model.Days
@@ -44,5 +45,18 @@ class ForecastDayAdapter(
     override fun getItemCount(): Int {
         return dayList.size
     }
+
+
+    private class DiffCallback : DiffUtil.ItemCallback<Days>() {
+        override fun areItemsTheSame(oldItem: Days, newItem: Days): Boolean {
+            return oldItem.datetime == newItem.datetime
+        }
+
+        override fun areContentsTheSame(oldItem: Days, newItem: Days): Boolean {
+            return oldItem == newItem
+        }
+
+    }
+
 
 }
