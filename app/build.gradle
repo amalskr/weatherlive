@@ -15,6 +15,8 @@ android {
         versionCode 1
         versionName "1.0"
 
+        buildConfigField("String", "APP_API_KEY", MY_API_KEY)
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary true
     }
@@ -96,7 +98,12 @@ dependencies {
     testImplementation "junit:junit:4.13.2"
     testImplementation "com.google.truth:truth:1.1.3"
     androidTestImplementation "androidx.arch.core:core-testing:2.1.0"// InstantTaskExecutorRule
+
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation 'com.google.truth:truth:1.1.3'
+
+    androidTestImplementation "androidx.test:runner:1.4.0"
+    androidTestImplementation "androidx.test:core:1.4.0"
+    androidTestImplementation "androidx.test.ext:junit-ktx:1.1.3"
 }

@@ -35,4 +35,5 @@
     <string name="no_network">Your network connection Lost</string>
     <string name="celsius_format">°C</string>
     <string name="fahrenheit_format">°F</string>
+    <string name="signup">SIGNUP</string>
 </resources>
