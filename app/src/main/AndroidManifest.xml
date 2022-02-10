@@ -19,14 +19,17 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity
-            android:name=".view.activity.SignupActivity"
+            android:name=".view.activity.AllOneActivity"
             android:exported="true">
-            <intent-filter>
+            <!--<intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            </intent-filter>-->
         </activity>
+        <activity
+            android:name=".view.activity.SignupActivity"
+            android:exported="true" />
         <activity
             android:name=".view.activity.SettingsActivity"
             android:exported="true"
@@ -42,11 +45,11 @@
             android:name=".ui.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.WeatherLive.NoActionBar">
-            <!--<intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
         </activity>
         <activity
             android:name=".ui.MainActivity"
