@@ -15,6 +15,7 @@ import com.ceylonapz.weatherlive.model.CityWeather
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
+
 /*
  by default interface  is "public"
  */
@@ -45,21 +46,9 @@ class MyStatic {
 * */
 object Singleton {}
 
-
-/*
-* structural expressions
-* Return: It returns from the nearest enclosing function or anonymous function by default.
-  Break: This expression terminates the closest enclosing loop.
-  Continue: This expression proceeds you to the next closest enclosing loop.
-* */
-
-
-/* Entry Point
-* Java Programs
-*   public static void main(String[] args)
-* Kotlin Programs
-*   fun main(args: Array<String>)
-* */
+fun main(args: Array<String>) {
+    println("runmain")
+}
 
 class AllOneActivity : AppCompatActivity(), userAction, CoroutineScope {
 
@@ -83,15 +72,178 @@ class AllOneActivity : AppCompatActivity(), userAction, CoroutineScope {
         //kotlinSingleton()
         //kotlinSealed()
         //kotlinCoroutines()
-        kotlinWorkerManager()
+        //kotlinWorkerManager()
+        //myAlgo()
+        myAlgo2()
 
         /*
          default visibility modifier ->
          public, internal, protected, private
+
+         scope function
+         let, apply, with, run, also
+
          */
+
+        /*
+* structural expressions
+* Return: It returns from the nearest enclosing function or anonymous function by default.
+  Break: This expression terminates the closest enclosing loop.
+  Continue: This expression proceeds you to the next closest enclosing loop.
+* */
+
+
+/* Entry Point
+* Java Programs
+*   public static void main(String[] args)
+* Kotlin Programs
+*   fun main(args: Array<String>)
+* */
 
         //showNotification()
     }
+
+    /*
+    * Function to find and print longest, substring without repeating characters.
+    *  */
+    private fun myAlgo2() {
+        val inputStr: String = "GEEKSFORGEEKS" //EKSFORG
+        //val inputStr: String = "YELLOW"
+        var index: Int = 0
+        val inputStrLenth: Int = inputStr.length
+
+        // Starting point of current substring.
+        var st = 0
+        // length of current substring.
+        var currlen = 0
+        // maximum length substring without repeating characters.
+        var maxlen = 0
+        // starting index of maximum length substring.
+        var start = 0
+        // Hash Map to store last occurrence of each already visited character.
+        val pos = HashMap<Char, Int>()
+        pos.put(inputStr[0], 0) //Last occurrence of first character is index 0;
+
+        for (i in 1 until inputStrLenth) {
+            index++
+            // If this character is not present in hash, then this is first occurrence of this character, store this in hash.
+            println("myAlgo pos : $pos")
+            if (!pos.containsKey(inputStr[i])) {
+                pos.put(inputStr[i], i)
+                println("myAlgo AddedPos : " + inputStr[i])
+            } else {
+                // If this character is present in hash then this character has previous occurrence,
+                // check if that occurrence is before or after starting  point of current substring.
+                //y e l
+                println("myAlgo having :" + inputStr[i] + " at " + pos.get(inputStr[i]))
+                if (pos.get(inputStr[i])!! >= st) { // 2 > 0
+
+                    // find length of current substring and update maxlen and start accordingly.
+                    currlen = i - st // 3 - 0 = 3 (currlen)
+                    if (maxlen < currlen) { //0 < 3
+                        maxlen = currlen; // 3(maxlen) = 3(currlen)
+                        start = st; // start0 = 0(st)
+                    }
+                    println(
+                        "myAlgo findLenthSubstr : max " + maxlen + " start " + start + " " + inputStr.substring(
+                            start,
+                            maxlen
+                        )
+                    )
+
+                    // Next substring will start after the last occurrence of current character to avoid its repetition.
+                    st = pos.get(inputStr[i])!! + 1;
+                    println("myAlgo findLenthSubstr : nextSubStartAt " + st + " " + pos.get(inputStr[i]))
+                }
+
+                // Update last occurrence of current character.
+                pos.replace(inputStr[i], i);
+            }
+        }
+
+        // Compare length of last substring with maxlen and update maxlen and start accordingly.
+        if (maxlen < index - st) {
+            maxlen = index - st;
+            start = st;
+        }
+
+        // The required longest substring without  repeating characters is from str[start] to str[start+maxlen-1].
+        val finalStr = inputStr.substring(start, start + maxlen);
+        println("myAlgo final : $finalStr")
+
+
+        /*val myInout = "YELLOW"
+        var lastVisitId = 1
+        val defultIndex = 1
+        val store = LinkedHashMap<Char, Int>()
+
+        *//*
+        * HashMap -> retrun LIFO
+        * LinkedHashMap -> retrin FIFO
+        * *//*
+
+        //GET FIRST TWO LETTERS (by defult)
+        store.put(myInout[0], 1)
+        store.put(myInout[1], 1) //lastVisitId = 1
+
+        var storeLetter = ""
+        var finalStoreLetter = ""
+
+        for (index in 2 until myInout.length) {
+            val nextChar = myInout[index]
+            println("myALdo Allletter : $nextChar")
+
+            //set word from store list
+            for (letter in store) {
+                storeLetter += letter.key
+            }
+            finalStoreLetter = storeLetter
+            println("myALdo letter : " + storeLetter)
+
+            //check contain having new letter in saved list
+            if (storeLetter.contentEquals(nextChar.toString())) {
+                println("myALdo letterContent")
+            } else {
+                println("myALdo NOT letterContent")
+                store.put(nextChar, 1)
+            }
+
+            //clear temp store letter
+            storeLetter = ""
+        }
+
+        println("myALdo LAST : "+finalStoreLetter)*/
+    }
+
+    private fun myAlgo(): Int {
+        val userInput = "abcdddddeffZZZZZZZZZ"
+        var ans = 1
+        var temp = 1
+        var letters = ""
+
+        for (i in 1 until userInput.length) {
+            println("myLetter " + userInput[i] + " " + userInput[i - 1])
+
+            //check left and right letters are same or not
+            if (userInput[i] == userInput[i - 1]) {
+                //if its same increment temp value and leters
+                ++temp
+                letters += userInput[i]
+                println("myLetter " + temp)
+            } else {
+                //else ans value is max value of temp and ans
+                ans = Math.max(ans, temp);
+                println("myLetter else " + ans + " " + temp)
+                //set temp 1, or else increment temp value with another letter
+                temp = 1;
+            }
+        }
+
+        ans = Math.max(ans, temp)
+        println("myLetter FINALFINAL " + ans + " -> " + letters)
+        return ans
+    }
+
 
     private fun kotlinWorkerManager() {
         println("myWorkoer Start")
@@ -153,6 +305,7 @@ class AllOneActivity : AppCompatActivity(), userAction, CoroutineScope {
             showUsersCoroutines(userOne.await(), userTwo.await()) // back on UI thread
         }
     }
+
 
     private fun showUsersCoroutines(await: Unit, await1: Unit) {
         println("myCortu showUser " + await.toString())
@@ -340,6 +493,34 @@ class AllOneActivity : AppCompatActivity(), userAction, CoroutineScope {
         val aryBool = booleanArrayOf(true, false, false, true, true)
         val aryString = arrayOf("Amal", "Shiwantha", "Kumara", "Ranasinghe", "Amal")
         val aryStringGood = arrayOf("Amal", "Shiwantha", "Kumara", "Ranasinghe")
+
+        val myMap = mutableMapOf<String, Int>() // MapOf - cant add duplicate ket,valiues
+        myMap.put("a", 10)
+        myMap.put("a", 10)
+        myMap.put("b", 10)
+        myMap.put("c", 20)
+
+        val mySet = mutableSetOf<Int>() // SetOf - cant add duplicares
+        mySet.add(10)
+        mySet.add(10)
+        mySet.add(20)
+        mySet.add(40)
+
+        val myList = mutableListOf<Int>() // ListOf - can add duplicates
+        myList.add(10)
+        myList.add(10)
+        myList.add(20)
+        myList.add(40)
+
+        println("nyCollectuin mySet " + mySet)
+        println("nyCollectuin myMap " + myMap)
+        println("nyCollectuin myList " + myList)
+
+        val name: String = "banana"
+
+        for (index in name) {
+            println("mySetIndex : $index")
+        }
 
         //foreach
         for (index in aryString) {
