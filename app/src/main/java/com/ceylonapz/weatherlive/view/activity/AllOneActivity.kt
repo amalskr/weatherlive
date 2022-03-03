@@ -74,7 +74,8 @@ class AllOneActivity : AppCompatActivity(), userAction, CoroutineScope {
         //kotlinCoroutines()
         //kotlinWorkerManager()
         //myAlgo()
-        myAlgo2()
+        //myAlgo2()
+        myAlgo3()
 
         /*
          default visibility modifier ->
@@ -104,9 +105,87 @@ class AllOneActivity : AppCompatActivity(), userAction, CoroutineScope {
     }
 
     /*
+    * find longest subssting value from non repeating
+    * input = ABDEAEAD
+    * ABDE,BDEA,DEA,EA,AE,EAD = RESULTS IS 4 BECAUSE (ABDE,BDEA)
+    * */
+    private fun myAlgo3() {
+        val userInput = "ABDEAEAD"
+        // Creating a set to store the last positions of occurrence
+        val seen: HashMap<Char, Int> = HashMap()
+        var maximum_length = 0
+
+        // starting the initial point of window to index 0
+        var start = 0
+
+        for (end in 0 until userInput.length) {
+
+            // Checking if we have already seen the element or not
+            if (seen.containsKey(userInput[end])) {
+                // If we have seen the number, move the start pointer to position after the last occurrence
+                start = Math.max(start, seen.get(userInput[end])!! + 1);
+            }
+
+            // Updating the last seen value of the character
+            seen.put(userInput[end], end)
+            println("myRepAlgo seen : $seen")
+            maximum_length = Math.max(maximum_length, end-start + 1);
+
+        }
+
+        println("myRepAlgo Final : $maximum_length")
+
+        val userStr = "ABDEAEAD"
+        var lastIndex = 0
+        val charMap = mutableSetOf<String>()
+        val wordList = mutableListOf<String>()
+
+/*
+        val myWord = getSubstgin(lastIndex, userStr)
+
+        if (myWord.isNotEmpty()) {
+            wordList.add(myWord)
+
+            //re-start the loop form lastIndex
+            lastIndex++
+
+            getSubstgin(lastIndex, userStr)
+        }
+
+        println("myRepAlgo charMap : $wordList")*/
+    }
+
+    fun getSubstgin(lastIndex: Int, userStr: String): String {
+
+        val charMap = mutableSetOf<String>()
+        var saveStrName = ""
+
+        for (index in lastIndex until userStr.length) {
+
+            //get char one by one
+            val str: String = userStr[index].toString()
+            println("myRepAlgo : $str")
+
+            //store char in a mapList if not duplicates
+            if (!charMap.contains(str)) {
+                charMap.add(str)
+            } else {
+                //Having duplicates,
+                //create word from charMap and save in wordList
+                for (saveStr in charMap) {
+                    saveStrName += saveStr
+                }
+            }
+        }
+        return saveStrName
+    }
+
+    /*
     * Function to find and print longest, substring without repeating characters.
     *  */
     private fun myAlgo2() {
+
+
         val inputStr: String = "GEEKSFORGEEKS" //EKSFORG
         //val inputStr: String = "YELLOW"
         var index: Int = 0
@@ -494,13 +573,13 @@ class AllOneActivity : AppCompatActivity(), userAction, CoroutineScope {
         val aryString = arrayOf("Amal", "Shiwantha", "Kumara", "Ranasinghe", "Amal")
         val aryStringGood = arrayOf("Amal", "Shiwantha", "Kumara", "Ranasinghe")
 
-        val myMap = mutableMapOf<String, Int>() // MapOf - cant add duplicate ket,valiues
+        val myMap = mutableMapOf<String, Int>() // MapOf - can't add duplicate ket,valiues
         myMap.put("a", 10)
         myMap.put("a", 10)
         myMap.put("b", 10)
         myMap.put("c", 20)
 
-        val mySet = mutableSetOf<Int>() // SetOf - cant add duplicares
+        val mySet = mutableSetOf<Int>() // SetOf - can't add duplicares
         mySet.add(10)
         mySet.add(10)
         mySet.add(20)
