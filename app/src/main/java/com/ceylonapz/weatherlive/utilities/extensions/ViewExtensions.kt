@@ -15,7 +15,7 @@ fun ProgressBar.show() {
     this.visibility = View.VISIBLE
 }
 
-fun Context.toast(message: CharSequence) =
+fun Context.showToast(message: CharSequence) =
     Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
 
 //startActivityAndClearStack(MainActivity::class.java, null)

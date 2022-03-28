@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-
+//network task #5
 @FlowPreview
 @HiltViewModel
 class MainViewModel @Inject constructor(

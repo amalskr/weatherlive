@@ -25,7 +25,7 @@ import com.ceylonapz.weatherlive.view.activity.SettingsActivity
 import com.ceylonapz.weatherlive.viewmodel.MainViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.infinity.movieapp.extensions.navigateActivity
-import com.infinity.movieapp.extensions.toast
+import com.infinity.movieapp.extensions.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 is Status.Error -> {
                     isNetworkConencted = false
-                    this.toast(getString(R.string.no_network))
+                    this.showToast(getString(R.string.no_network))
                 }
             }
         }
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
             if (myFavoriteList!!.isNotEmpty()) {
                 showFavoriteLocations()
             } else {
-                this.toast(getString(R.string.pls_add_new_locartion))
+                this.showToast(getString(R.string.pls_add_new_locartion))
                 openFavoriteScreen()
             }
         }
@@ -111,7 +111,7 @@ class MainActivity : AppCompatActivity() {
         if (intent != null && intent.getStringExtra(GPS_LOCATION) != null) {
             gpsLocation = intent.getStringExtra(GPS_LOCATION) as String
             if (gpsLocation == NO_LOCATION) {
-                this.toast(getString(R.string.cant_get_current_location))
+                this.showToast(getString(R.string.cant_get_current_location))
             }
         }
     }
@@ -143,7 +143,7 @@ class MainActivity : AppCompatActivity() {
                 searchLocation()
             }
         } else {
-            this.toast(getString(R.string.no_network))
+            this.showToast(getString(R.string.no_network))
         }
     }
 

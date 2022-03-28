@@ -1,19 +1,20 @@
-package com.ceylonapz.weatherlive.utilities.di
+package com.ceylonapz.weatherlive.utilities.rxkots
 
 import com.ceylonapz.weatherlive.utilities.network.api.ForecastService
+import com.ceylonapz.weatherlive.utilities.rxkots.GitHubClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
-//network task #4
+//RxDI Task #4
 @InstallIn(SingletonComponent::class)
 @Module
-object NetworkModule {
+object RxKotsModule {
     @Singleton
     @Provides
-    fun provideForecastService(): ForecastService {
-        return ForecastService.create()
+    fun provideForecastService(): GitHubClient {
+        return GitHubClient.create()
     }
 }
